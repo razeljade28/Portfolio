@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Crypto Writer Portfolio — Web3 Analysis & Market Research</title>
+<meta name="description" content="72 published articles on cryptocurrency, blockchain, DeFi, and Web3 market analysis.">
+<meta name="theme-color" content="#1D9E75">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#f9f8f5;--surface:#ffffff;--text:#1a1a18;--muted:#6b6b66;--hint:#9d9d98;
+  --border:rgba(0,0,0,0.09);--border-hover:rgba(0,0,0,0.18);
+  --accent:#1D9E75;--accent-light:#E1F5EE;--accent-dark:#0F6E56;
+  --blue:#185FA5;--amber:#BA7517;
+}
+@media(prefers-color-scheme:dark){
+  :root{
+    --bg:#141413;--surface:#1e1e1c;--text:#e8e6df;--muted:#9d9d98;--hint:#6b6b66;
+    --border:rgba(255,255,255,0.09);--border-hover:rgba(255,255,255,0.18);
+    --accent-light:#04342C;
+  }
+}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;font-size:16px;line-height:1.65}
+
+/* Layout */
+.wrap{max-width:800px;margin:0 auto;padding:2.5rem 1.25rem 4rem}
+
+/* Offline banner */
+#offline-banner{display:none;background:#BA7517;color:#fff;font-size:13px;text-align:center;padding:8px 16px;position:sticky;top:0;z-index:100}
+body.offline #offline-banner{display:block}
+
+/* Hero */
+.hero{display:grid;grid-template-columns:84px 1fr;gap:1.5rem;align-items:start;margin-bottom:2.5rem;padding-bottom:2.5rem;border-bottom:1px solid var(--border)}
+.avatar{width:84px;height:84px;border-radius:50%;background:linear-gradient(135deg,#1D9E75,#085041);display:flex;align-items:center;justify-content:center;font-size:28px;font-weight:500;color:#fff;flex-shrink:0;letter-spacing:1px}
+.hero-meta{font-size:12px;color:var(--hint);margin-bottom:6px;letter-spacing:0.04em}
+.hero-name{font-family:'DM Serif Display',serif;font-size:24px;font-weight:400;line-height:1.2;margin-bottom:10px}
+.hero-bio{font-size:14px;color:var(--muted);line-height:1.7;max-width:500px}
+.hero-stats{display:flex;flex-wrap:wrap;gap:1rem;margin-top:1rem}
+.stat{font-size:13px;color:var(--muted)}
+.stat b{color:var(--text);font-weight:500}
+.stat a{color:var(--accent);text-decoration:none}
+.stat a:hover{text-decoration:underline}
+
+/* Toolbar */
+.toolbar{display:flex;flex-direction:column;gap:10px;margin-bottom:1.25rem}
+.search-wrap{position:relative}
+.search-input{width:100%;font-family:'DM Sans',sans-serif;font-size:14px;padding:9px 14px 9px 38px;border:1px solid var(--border);border-radius:8px;background:var(--surface);color:var(--text);outline:none;transition:border-color .15s}
+.search-input::placeholder{color:var(--hint)}
+.search-input:focus{border-color:var(--accent)}
+.search-icon{position:absolute;left:12px;top:50%;transform:translateY(-50%);opacity:0.4;pointer-events:none}
+.filters{display:flex;gap:7px;flex-wrap:wrap}
+.filter-btn{font-family:'DM Sans',sans-serif;font-size:12px;padding:5px 14px;border:1px solid var(--border);border-radius:20px;background:transparent;color:var(--muted);cursor:pointer;transition:all .15s;white-space:nowrap}
+.filter-btn:hover{border-color:var(--border-hover);color:var(--text)}
+.filter-btn.active{background:var(--surface);color:var(--text);border-color:var(--border-hover);font-weight:500}
+
+/* Section header */
+.section-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem}
+.section-label{font-size:11px;font-weight:500;letter-spacing:0.09em;text-transform:uppercase;color:var(--hint)}
+.count{font-size:13px;color:var(--hint)}
+
+/* Articles */
+.articles{display:flex;flex-direction:column}
+.article{display:grid;grid-template-columns:1fr 80px;gap:1rem;align-items:start;padding:1rem 0;border-bottom:1px solid var(--border);text-decoration:none;color:inherit;transition:opacity .15s}
+.article:last-child{border-bottom:none}
+.article:hover{opacity:0.65}
+.art-tag{font-size:11px;font-weight:500;letter-spacing:0.06em;text-transform:uppercase;color:var(--hint);margin-bottom:5px;display:flex;align-items:center;gap:6px}
+.tag-dot{display:inline-block;width:6px;height:6px;border-radius:50%;flex-shrink:0}
+.art-title{font-size:15px;font-weight:500;line-height:1.45;color:var(--text)}
+.art-date{font-size:12px;color:var(--hint);text-align:right;padding-top:2px}
+.empty{text-align:center;padding:3rem;color:var(--muted);font-size:14px}
+
+/* Footer */
+.footer{margin-top:3rem;padding-top:1.75rem;border-top:1px solid var(--border);font-size:12px;color:var(--hint);line-height:1.7}
+.footer a{color:var(--accent);text-decoration:none}
+.footer a:hover{text-decoration:underline}
+.footer-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-top:1rem}
+.footer-block b{display:block;margin-bottom:4px;color:var(--muted);font-weight:500;font-size:11px;text-transform:uppercase;letter-spacing:0.07em}
+
+/* Install PWA button */
+#install-btn{display:none;font-family:'DM Sans',sans-serif;font-size:13px;padding:8px 18px;border:1px solid var(--accent);border-radius:20px;background:transparent;color:var(--accent);cursor:pointer;transition:all .15s}
+#install-btn:hover{background:var(--accent);color:#fff}
+
+/* Mobile */
+@media(max-width:560px){
+  .hero{grid-template-columns:1fr}
+  .avatar{width:68px;height:68px;font-size:22px}
+  .hero-name{font-size:20px}
+  .article{grid-template-columns:1fr}
+  .art-date{display:none}
+  .footer-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+<div id="offline-banner">⚠ You're offline — showing cached portfolio</div>
+
+<div class="wrap">
+  <header class="hero">
+    <div class="avatar">RA</div>
+    <div>
+      <div class="hero-meta">Crypto Writer · Web3 Analyst · Philippines</div>
+      <h1 class="hero-name">Razel Jade Hijastro</h1>
+      <p class="hero-bio">Writing about Web3 without cheerleading for it — the hype, the blowups, and the occasional thing that actually works. DYOR is still the rule. I just try to make the research less painful.</p>
+      <div class="hero-stats">
+        <div class="stat"><b id="total-count">71</b> published articles</div>
+        <div class="stat"><b>2025–2026</b></div>
+        <div class="stat"><b><a href="https://www.lbank.com/creator/profile/675b7fb016824d0b8f45310ae3a4dc35" target="_blank" rel="noopener">LBank Creator ↗</a></b></div>
+        <button id="install-btn">📥 Add to Home Screen</button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="toolbar">
+      <div class="search-wrap">
+        <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        <input class="search-input" type="search" id="search" placeholder="Search articles…" autocomplete="off">
+      </div>
+      <div class="filters" id="filter-bar"></div>
+    </div>
+
+    <div class="section-header">
+      <span class="section-label">Portfolio</span>
+      <span class="count" id="count-label">72 articles</span>
+    </div>
+
+    <div class="articles" id="articles-list"></div>
+  </main>
+
+  <footer class="footer">
+    <p>Originally published on <a href="https://www.lbank.com/creator/profile/675b7fb016824d0b8f45310ae3a4dc35" target="_blank" rel="noopener">LBank Creator</a>. This is a personal portfolio backup — all articles link to their original published versions.</p>
+    <div class="footer-grid">
+      <div class="footer-block">
+        <b>Coverage</b>
+        Cryptocurrency markets, blockchain regulation, DeFi protocols, Web3 industry news, Bitcoin analysis, stablecoins, NFTs, and crypto investment research.
+      </div>
+      <div class="footer-block">
+        <b>Offline access</b>
+        This portfolio works offline once visited. All 72 article links and metadata are stored locally in your browser.
+      </div>
+    </div>
+  </footer>
+</div>
+
+<script>
+const articles = [
+  // May 2026
+  {title:"RISCOIN's Philippine Recruitment Drive: A Growing Concern That Regulators Are Now Taking Seriously",tag:"Regulation",date:"2026-05-07",url:"https://www.lbank.com/creator/riscoin-philippine-recruitment-drive-regulators-concern"},
+  {title:"Fake Crypto Wallets Designed to Drain Digital Assets Identified on Apple App Store",tag:"Security",date:"2026-05-07",url:"https://www.lbank.com/creator/fake-crypto-wallets-drain-digital-assets-apple-app-store"},
+  {title:"Metaplanet Raises $50 Million in Zero-Interest Bonds to Buy More Bitcoin",tag:"Bitcoin",date:"2026-05-07",url:"https://www.lbank.com/creator/metaplanet-buy-bitcoin-50m-bonds"},
+  {title:"Trump-Linked American Bitcoin Energizes 11,298 New ASICs",tag:"Bitcoin",date:"2026-05-06",url:"https://www.lbank.com/creator/trump-linked-american-bitcoin-energizes-11298-new-asics"},
+  {title:"Rand on a Leash: South Africa Wants to Track Every Crypto Move You Make Across Its Borders",tag:"Regulation",date:"2026-05-06",url:"https://www.lbank.com/creator/rand-on-leash-south-africa-track-crypto-move-borders"},
+  {title:"CZ's Message to Anyone Hitting Rock Bottom: 'Keep Walking' — And He's Speaking From Experience",tag:"Industry",date:"2026-05-06",url:"https://www.lbank.com/creator/cz-message-rock-bottom-keep-walking-experience"},
+  {title:"Bitcoin Buyers Show 'Renewed Conviction' with BTC Price Push Above $79K",tag:"Bitcoin",date:"2026-05-06",url:"https://www.lbank.com/creator/bitcoin-buyers-renewed-conviction-btc-price-push-79k"},
+  {title:"Uzbekistan Creates State-Backed Crypto Mining Zone with Tax Breaks",tag:"Regulation",date:"2026-05-06",url:"https://www.lbank.com/creator/uzbekistan-state-backed-crypto-mining-zone-tax-breaks"},
+  {title:"China Turns Up the Heat: What Beijing's New Online Marketing Rules Actually Mean for Crypto",tag:"Regulation",date:"2026-05-06",url:"https://www.lbank.com/creator/china-beijing-marketing-rules-crypto"},
+  {title:"Crypto PAC's Texas Ad Pause Signals a Shift in Political Strategy",tag:"Industry",date:"2026-05-05",url:"https://www.lbank.com/creator/crypto-pacs-texas-ad-pause-signals-shift-political-strategy"},
+  {title:"Philippines SEC Flags dYdX and Six Crypto Platforms as Unauthorized",tag:"Regulation",date:"2026-05-05",url:"https://www.lbank.com/creator/philippines-sec-flags-dydx-six-crypto-platforms-unauthorized"},
+  {title:"Ethereum Price Prediction 2026: Can ETH Break Its All-Time High?",tag:"Ethereum",date:"2026-05-04",url:"https://www.lbank.com/creator/ethereum-price-prediction-2026-eth-ath"},
+  {title:"South Korea's Tax Agency Opens Bidding for a Crypto Tracing Tool",tag:"Regulation",date:"2026-05-04",url:"https://www.lbank.com/creator/south-koreas-tax-agency-opens-bidding-crypto-tracing-tool"},
+  {title:"Scammers Are Demanding Crypto from Ships Stranded in the Strait of Hormuz",tag:"Security",date:"2026-05-03",url:"https://www.lbank.com/creator/scammers-demand-crypto-stranded-ships-strait-of-hormuz"},
+  {title:"Hong Kong Licenses HKD Stablecoins — and Banks Are Leading the Charge",tag:"Stablecoins",date:"2026-05-03",url:"https://www.lbank.com/creator/hong-kong-licenses-hkd-stablecoins-banks-lead"},
+  {title:"Bhutan Is Quietly Selling Its Bitcoin and Nobody Knows Why",tag:"Bitcoin",date:"2026-05-02",url:"https://www.lbank.com/creator/bhutan-quietly-selling-bitcoin-nobody-knows-why"},
+  {title:"An ETH Valuation Metric Just Hit Its 2022 Level — What That Means for a Rally to $2.5K",tag:"Ethereum",date:"2026-05-02",url:"https://www.lbank.com/creator/eth-valuation-metric-hits-2022-level-rally-2-5k"},
+  {title:"Japan Just Reclassified Crypto as a Financial Instrument — Here's What Changes",tag:"Regulation",date:"2026-05-01",url:"https://www.lbank.com/creator/japan-reclassified-crypto-financial-instrument-changes"},
+  // April 2026
+  {title:"Bitcoin Just Hit $73K — What Happens Next?",tag:"Bitcoin",date:"2026-04-30",url:"https://www.lbank.com/creator/bitcoin-hit-73k-what-happens-next"},
+  {title:"Bitcoin Didn't Wait for a Ceasefire — the Headlines Were Enough",tag:"Bitcoin",date:"2026-04-29",url:"https://www.lbank.com/creator/bitcoin-didnt-wait-ceasefire-headlines-were-enough"},
+  {title:"MicroStrategy Didn't Blink — It Repositioned",tag:"Bitcoin",date:"2026-04-28",url:"https://www.lbank.com/creator/microstrategy-didnt-blink-repositioned"},
+  {title:"Trump's Iran Deadline: How Chaos Breaks Markets and Crypto Rises Anyway",tag:"Industry",date:"2026-04-27",url:"https://www.lbank.com/creator/trump-iran-deadline-chaos-breaks-markets-crypto-rises-anyway"},
+  {title:"Kiyosaki Says Buy Bitcoin and Gold — His 74% Shift Explains Why",tag:"Bitcoin",date:"2026-04-26",url:"https://www.lbank.com/creator/kiyosaki-buy-bitcoin-and-gold-74-shift"},
+  {title:"Ark Invest Sees One-Third of Bitcoin Supply at Risk From Quantum Threat",tag:"Bitcoin",date:"2026-04-25",url:"https://www.lbank.com/creator/-j91qefex"},
+  {title:"DAOs Are Not Doomed — They Just Need to Evolve, Says Aave Founder",tag:"DeFi",date:"2026-04-25",url:"https://www.lbank.com/creator/daos-not-doomed-evolve-aave-founder"},
+  {title:"Bitcoin ETFs Gain $251M as Goldman Sachs Leads a New Wave of XRP ETF Holders",tag:"Bitcoin",date:"2026-04-24",url:"https://www.lbank.com/creator/bitcoin-etfs-gain-251m-goldman-sachs-leads-xrp-etf-holders"},
+  {title:"US Seeks Forfeiture of $34M USDT Tied to Crypto Investment Scam",tag:"Security",date:"2026-04-23",url:"https://www.lbank.com/creator/us-seeks-forfeiture-34m-usdt-tied-crypto-investment-scam"},
+  {title:"India Arrests Darwin Labs Co-Founder in $10B GainBitcoin Scam",tag:"Security",date:"2026-04-22",url:"https://www.lbank.com/creator/india-arrests-darwin-labs-co-founder-gainbitcoin-scam"},
+  {title:"Higher CPI Print for March Was Already Baked Into BTC Price, Say Analysts",tag:"Bitcoin",date:"2026-04-21",url:"https://www.lbank.com/creator/higher-cpi-print-march-already-baked-btc-price-analysts"},
+  {title:"FDIC Chair: No Deposit Insurance for Stablecoins Under the GENIUS Act",tag:"Stablecoins",date:"2026-04-20",url:"https://www.lbank.com/creator/fdic-chair-no-deposit-insurance-stablecoins-genius-act"},
+  {title:"Mastercard's Crypto Partner Program: Who's Who in the Industry",tag:"Industry",date:"2026-04-19",url:"https://www.lbank.com/creator/mastercard-crypto-partner-program-whos-who-industry"},
+  {title:"Ripple to Buy Back $750M in Shares Through April — What's Going On?",tag:"Industry",date:"2026-04-18",url:"https://www.lbank.com/creator/ripple-buy-back-750m-shares-through-april-what-going-on"},
+  {title:"Tokenized Assets Climb to $23.6B as Investors Seek Always-On Markets",tag:"Tokenization",date:"2026-04-17",url:"https://www.lbank.com/creator/tokenized-assets-climb-23-6b-investors-seek-always-on-markets"},
+  {title:"SCOTUS Voids Trump Tariffs: What It Means for Bitcoin, Volatility, and Inflation",tag:"Industry",date:"2026-04-16",url:"https://www.lbank.com/creator/scotus-voids-trump-tariffs-bitcoin-volatility-inflation"},
+  {title:"Dutch Regulator Fines Polymarket $840K Over Crypto Prediction Markets",tag:"Regulation",date:"2026-04-15",url:"https://www.lbank.com/creator/dutch-regulator-fines-polymarket-crypto-840k"},
+  {title:"Dubai Tokenized Property Trading, WLFI Maldives Resort, and the New Crypto Real Estate Playbook",tag:"Tokenization",date:"2026-04-14",url:"https://www.lbank.com/creator/dubai-tokenized-property-trading-wlfi-maldives-resort"},
+  {title:"MARA's Exaion Acquisition: How Bitcoin Mining and AI Are Merging",tag:"Industry",date:"2026-04-13",url:"https://www.lbank.com/creator/mara-exaion-acquisition-bitcoin-ai-mining-evolution"},
+  {title:"South Korea Hacker Returns Bitcoin — Here's the Complicated Reason Why",tag:"Security",date:"2026-04-12",url:"https://www.lbank.com/creator/south-korea-hacker-returns-bitcoin"},
+  {title:"Bitdeer Sells 943 BTC from Treasury, Leaving the Miner at Near-Zero Holdings",tag:"Bitcoin",date:"2026-04-11",url:"https://www.lbank.com/creator/bitdeer-sells-943-btc-treasury-miner-zero-holdings"},
+  {title:"Warsh's $250B Crypto Wipeout Warning: What the Fed Risk Signal Actually Means",tag:"Bitcoin",date:"2026-04-10",url:"https://www.lbank.com/creator/warsh-250b-crypto-wipeout-bitcoin-17-fed-risk"},
+  {title:"Tether Froze $544M in Turkey — What That Tells Us About Stablecoin Enforcement",tag:"Stablecoins",date:"2026-04-09",url:"https://www.lbank.com/creator/tether-544m-turkey-freeze-stablecoins-enforcement"},
+  {title:"Hong Kong Stablecoin Licenses: Why So Few Approvals — and Why March Matters",tag:"Stablecoins",date:"2026-04-08",url:"https://www.lbank.com/creator/hong-kong-stablecoin-licenses-few-approvals-march-matters"},
+  {title:"Satoshi-Era Whale Dumps $1.3 Billion in Bitcoin After 14 Years of Silence",tag:"Bitcoin",date:"2026-04-07",url:"https://www.lbank.com/creator/satoshi-era-whale-dumps-1-3-billion-bitcoin-14-years"},
+  // March 2026
+  {title:"Hype vs. Maturity: Which 2026 Crypto Trends Will Outlast the Crash?",tag:"Industry",date:"2026-03-30",url:"https://www.lbank.com/creator/hype-maturity-2026-crypto-trends-outlast-crash"},
+  {title:"Crypto PACs Gear Up for the 2026 Midterms — and the Influence Risk Is Real",tag:"Industry",date:"2026-03-28",url:"https://www.lbank.com/creator/crypto-pacs-gear-up-2026-midterms-influence-risk"},
+  {title:"The $150,000 Question: Why Bitcoin's December Range Still Matters",tag:"Bitcoin",date:"2026-03-25",url:"https://www.lbank.com/creator/150000-question-bitcoin-december-range-matters"},
+  {title:"Social Engineering Is Unhackable — The $282M Loss That Proves It",tag:"Security",date:"2026-03-22",url:"https://www.lbank.com/creator/social-engineering-unhackable-crypto-security-282m-loss"},
+  {title:"The High Priests Problem: Is Ethereum's Complexity Its Biggest Threat?",tag:"Ethereum",date:"2026-03-20",url:"https://www.lbank.com/creator/high-priests-problem-ethereum-complexity-threat"},
+  {title:"The Tokenization Supercycle: How Wall Street Is Putting Real Assets On-Chain",tag:"Tokenization",date:"2026-03-18",url:"https://www.lbank.com/creator/tokenization-supercycle-wall-street-real-assets-on-chain"},
+  {title:"AI Romance Meets Crypto Fraud: Hong Kong's $46M Wake-Up Call",tag:"Security",date:"2026-03-15",url:"https://www.lbank.com/creator/ai-romance-crypto-fraud-hong-kong-46m-wake-up-call"},
+  {title:"September 2026 Deadline: The Rule That Could Kill UK Crypto Businesses",tag:"Regulation",date:"2026-03-12",url:"https://www.lbank.com/creator/september-2026-deadline-kill-uk-crypto-business"},
+  {title:"Venezuela's $60 Billion Shadow: Bitcoin's Expanding Geopolitical Role",tag:"Bitcoin",date:"2026-03-10",url:"https://www.lbank.com/creator/venezuela-60-billion-bitcoin-geopolitical-crypto"},
+  {title:"CZ's Supercycle Call: Stop Hunting Crypto — Build It Instead",tag:"Industry",date:"2026-03-08",url:"https://www.lbank.com/creator/czs-supercycle-call-regulators-stop-hunting-crypto"},
+  {title:"Ripple's UK Breakthrough: Cross-Border Crypto Payments Get Regulatory Approval",tag:"Industry",date:"2026-03-06",url:"https://www.lbank.com/creator/ripple-uk-breakthrough-cross-border-crypto-payments-approval"},
+  {title:"South Korea's Bitcoin Seizure Ruling: Inside the $33 Billion Legal Shield",tag:"Regulation",date:"2026-03-04",url:"https://www.lbank.com/creator/south-korea-bitcoin-seizure-ruling-33-billion-legal-shield"},
+  // Earlier 2026
+  {title:"$657 Million Floods Into Crypto Portfolio — and There's a Nasty Surprise",tag:"Industry",date:"2026-02-28",url:"https://www.lbank.com/creator/657-million-flood-crypto-portfolio-nasty-surprise"},
+  {title:"Wall Street's Crypto Endgame: The Holdouts Are Finally Caving",tag:"Industry",date:"2026-02-25",url:"https://www.lbank.com/creator/wall-street-crypto-endgame-holdouts-finally-cave"},
+  {title:"Vitalik Says Ethereum Has Solved Crypto's Impossible Problem",tag:"Ethereum",date:"2026-02-22",url:"https://www.lbank.com/creator/vitalik-ethereum-solved-cryptos-impossible-problem"},
+  {title:"End of Crypto Tax Anonymity: 48 Countries Just Flipped the Switch",tag:"Regulation",date:"2026-02-20",url:"https://www.lbank.com/creator/end-crypto-tax-anonymity-48-countries-flipped-switch"},
+  {title:"$11 Trillion Bursts Into Crypto in a Blink — Vanguard's Surrender Explained",tag:"Industry",date:"2026-02-18",url:"https://www.lbank.com/creator/11-trillion-bursts-blink-vanguard-surrender-crypto"},
+  {title:"Trump's 2025 Crypto Revolution: From Campaign Promises to Federal Law",tag:"Regulation",date:"2026-02-15",url:"https://www.lbank.com/creator/trump-2025-crypto-revolution-campaign-promises-federal-law"},
+  {title:"DeFAI Breakthrough: How AI Agents Are Fixing Crypto's Biggest Problem",tag:"DeFi",date:"2026-02-12",url:"https://www.lbank.com/creator/defai-breakthrough-ai-agents-fixing-crypto-problem"},
+  {title:"$50 Million in Crypto Lost in Seconds — All Because of Copy-Paste",tag:"Security",date:"2026-02-10",url:"https://www.lbank.com/creator/50-million-crypto-lost-seconds-copy-paste"},
+  {title:"The 2026 Tokenization Boom: Navigating the Market Dip",tag:"Tokenization",date:"2026-02-08",url:"https://www.lbank.com/creator/2026-tokenization-boom-market-dip"},
+  {title:"Sovereign Gold on Blockchain: Bhutan, TER, and the Crypto Adoption Wave",tag:"Tokenization",date:"2026-02-05",url:"https://www.lbank.com/creator/sovereign-gold-blockchain-bhutan-ter-crypto-adoption-wave"},
+  {title:"A Phishing Attack That Bypassed Everything — DeFi's Security Problem",tag:"Security",date:"2026-02-03",url:"https://www.lbank.com/creator/phishing-attack-bypassed-everything-defi-security-problem"},
+  {title:"Wall Street Builds the Infrastructure Crypto Always Touted",tag:"Industry",date:"2026-02-01",url:"https://www.lbank.com/creator/wall-street-builds-infrastructure-crypto-touted"},
+  {title:"Digital Dollars and the Threat to Central Banks: The IMF's Stablecoin Warning",tag:"Stablecoins",date:"2026-01-28",url:"https://www.lbank.com/creator/digital-dollars-threat-central-banks-imf-stablecoin-warning"},
+  {title:"Ethereum's Quiet Upgrade: Why This Infrastructure Improvement Matters",tag:"Ethereum",date:"2026-01-25",url:"https://www.lbank.com/creator/ethereum-quiet-upgrade-infrastructure-improves"},
+  {title:"The Crypto Phone: Solana Mobile's SKR Bet on Web3 Hardware",tag:"Industry",date:"2026-01-22",url:"https://www.lbank.com/creator/crypto-phone-solana-mobile-skr-bet"},
+  {title:"Singapore's Cross-Border Payments Upgrade — and Why It Matters for Crypto",tag:"Industry",date:"2026-01-20",url:"https://www.lbank.com/creator/singapore-cross-border-payments-why-it-matters"},
+];
+
+const tagColors={
+  "Bitcoin":"#E5860A","Ethereum":"#5865F2","Regulation":"#D4537E","Security":"#E24B4A",
+  "Industry":"#1D9E75","Stablecoins":"#0F6E56","DeFi":"#7F77DD","Tokenization":"#185FA5","NFT":"#D85A30"
+};
+const tags=[...new Set(articles.map(a=>a.tag))].sort();
+let activeTag="All",query="";
+
+function buildFilters(){
+  const bar=document.getElementById('filter-bar');
+  const mk=(label,tag)=>{
+    const b=document.createElement('button');
+    b.className='filter-btn'+(tag==='All'?' active':'');
+    b.textContent=label;
+    b.onclick=()=>setFilter(tag);
+    bar.appendChild(b);
+  };
+  mk('All','All');
+  tags.forEach(t=>{
+    const c=articles.filter(a=>a.tag===t).length;
+    mk(`${t} (${c})`,t);
+  });
+}
+
+function setFilter(tag){
+  activeTag=tag;
+  document.querySelectorAll('.filter-btn').forEach(b=>{
+    const isAll=b.textContent==='All'||b.textContent.startsWith('All');
+    const matches=(tag==='All'&&isAll)||(b.textContent.startsWith(tag));
+    b.classList.toggle('active',matches);
+  });
+  render();
+}
+
+function render(){
+  const q=query.toLowerCase().trim();
+  const filtered=articles.filter(a=>{
+    const tagOk=activeTag==='All'||a.tag===activeTag;
+    const searchOk=!q||a.title.toLowerCase().includes(q)||a.tag.toLowerCase().includes(q)||a.date.includes(q);
+    return tagOk&&searchOk;
+  });
+  document.getElementById('count-label').textContent=`${filtered.length} article${filtered.length!==1?'s':''}`;
+  const list=document.getElementById('articles-list');
+  list.innerHTML='';
+  if(!filtered.length){
+    list.innerHTML='<div class="empty">No articles match — try a different search or filter.</div>';
+    return;
+  }
+  filtered.forEach(a=>{
+    const el=document.createElement('a');
+    el.className='article';
+    el.href=a.url;
+    el.target='_blank';
+    el.rel='noopener noreferrer';
+    const color=tagColors[a.tag]||'#888780';
+    el.innerHTML=`<div><div class="art-tag"><span class="tag-dot" style="background:${color}"></span>${a.tag}</div><div class="art-title">${a.title}</div></div><div class="art-date">${a.date}</div>`;
+    list.appendChild(el);
+  });
+}
+
+document.getElementById('search').addEventListener('input',e=>{query=e.target.value;render();});
+buildFilters();
+render();
+
+// PWA install
+let deferredPrompt;
+window.addEventListener('beforeinstallprompt',e=>{
+  e.preventDefault();deferredPrompt=e;
+  document.getElementById('install-btn').style.display='inline-block';
+});
+document.getElementById('install-btn').onclick=async()=>{
+  if(!deferredPrompt)return;
+  deferredPrompt.prompt();
+  const{outcome}=await deferredPrompt.userChoice;
+  if(outcome==='accepted')document.getElementById('install-btn').style.display='none';
+  deferredPrompt=null;
+};
+
+// Offline detection
+function checkOnline(){document.body.classList.toggle('offline',!navigator.onLine);}
+window.addEventListener('online',checkOnline);
+window.addEventListener('offline',checkOnline);
+checkOnline();
+
+// Service Worker registration
+if('serviceWorker' in navigator){
+  navigator.serviceWorker.register('sw.js').catch(()=>{});
+}
+</script>
+</body>
+</html>
