@@ -827,7 +827,7 @@ function render(){
     const el=document.createElement('a');
     el.className='article';
     // If a local .mhtml file exists, open that; otherwise fall back to LBank URL
-    el.href=a.local?`Articles/${a.local}`:a.url;
+    el.href=a.url;
     el.target='_blank';
     el.rel='noopener noreferrer';
     el.dataset.delay=Math.min(i*30,300); // stagger up to 300ms
