@@ -1,0 +1,881 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Crypto Writer Portfolio — Web3 Analysis & Market Research</title>
+<meta name="description" content="72 published articles on cryptocurrency, blockchain, DeFi, and Web3 market analysis.">
+<meta name="theme-color" content="#1D9E75">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
+
+<style>
+/* ─── Reset & Variables ──────────────────────────────── */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#f9f8f5;--surface:#ffffff;--text:#1a1a18;--muted:#6b6b66;--hint:#9d9d98;
+  --border:rgba(0,0,0,0.09);--border-hover:rgba(0,0,0,0.18);
+  --accent:#1D9E75;--accent-light:#E1F5EE;--accent-dark:#0F6E56;
+  --blue:#185FA5;--amber:#BA7517;
+  --ease-out-expo: cubic-bezier(0.16,1,0.3,1);
+}
+@media(prefers-color-scheme:dark){
+  :root{
+    --bg:#141413;--surface:#1e1e1c;--text:#e8e6df;--muted:#9d9d98;--hint:#6b6b66;
+    --border:rgba(255,255,255,0.09);--border-hover:rgba(255,255,255,0.18);
+    --accent-light:#04342C;
+  }
+}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{
+  font-family:'DM Sans',sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  min-height:100vh;
+  font-size:16px;
+  line-height:1.65;
+  overflow-x:hidden;
+}
+
+/* ─── Animated background grain ──────────────────────── */
+body::before{
+  content:'';
+  position:fixed;
+  inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events:none;
+  z-index:0;
+  opacity:0.5;
+}
+
+/* ─── Subtle floating orbs ────────────────────────────── */
+.orb{
+  position:fixed;
+  border-radius:50%;
+  filter:blur(80px);
+  pointer-events:none;
+  z-index:0;
+  animation:orb-drift 18s ease-in-out infinite alternate;
+}
+.orb-1{
+  width:400px;height:400px;
+  background:radial-gradient(circle,rgba(29,158,117,0.07) 0%,transparent 70%);
+  top:-100px;right:-80px;
+  animation-duration:20s;
+}
+.orb-2{
+  width:300px;height:300px;
+  background:radial-gradient(circle,rgba(24,95,165,0.05) 0%,transparent 70%);
+  bottom:10%;left:-60px;
+  animation-duration:15s;
+  animation-delay:-7s;
+}
+@keyframes orb-drift{
+  0%{transform:translate(0,0) scale(1)}
+  100%{transform:translate(30px,40px) scale(1.08)}
+}
+
+/* ─── Layout ──────────────────────────────────────────── */
+.wrap{max-width:800px;margin:0 auto;padding:2.5rem 1.25rem 4rem;position:relative;z-index:1}
+
+/* ─── Offline banner ──────────────────────────────────── */
+#offline-banner{
+  display:none;background:#BA7517;color:#fff;
+  font-size:13px;text-align:center;padding:8px 16px;
+  position:sticky;top:0;z-index:100;
+}
+body.offline #offline-banner{display:block}
+
+/* ─── Page load animations ────────────────────────────── */
+@keyframes fade-up{
+  from{opacity:0;transform:translateY(20px)}
+  to{opacity:1;transform:translateY(0)}
+}
+@keyframes fade-in{
+  from{opacity:0}
+  to{opacity:1}
+}
+@keyframes scale-in{
+  from{opacity:0;transform:scale(0.88)}
+  to{opacity:1;transform:scale(1)}
+}
+@keyframes slide-right{
+  from{opacity:0;transform:translateX(-16px)}
+  to{opacity:1;transform:translateX(0)}
+}
+
+.anim-fade-up{
+  opacity:0;
+  animation:fade-up 0.7s var(--ease-out-expo) forwards;
+}
+.anim-scale-in{
+  opacity:0;
+  animation:scale-in 0.6s var(--ease-out-expo) forwards;
+}
+.anim-fade-in{
+  opacity:0;
+  animation:fade-in 0.6s ease forwards;
+}
+
+/* ─── Hero ────────────────────────────────────────────── */
+.hero{
+  display:grid;
+  grid-template-columns:84px 1fr;
+  gap:1.5rem;
+  align-items:start;
+  margin-bottom:2.5rem;
+  padding-bottom:2.5rem;
+  border-bottom:1px solid var(--border);
+}
+.avatar-wrap{
+  position:relative;
+  width:84px;height:84px;
+  flex-shrink:0;
+}
+.avatar{
+  width:84px;height:84px;
+  border-radius:50%;
+  object-fit:cover;
+  display:block;
+  transition:transform 0.4s var(--ease-out-expo), box-shadow 0.4s ease;
+}
+.avatar:hover{
+  transform:scale(1.06) rotate(-2deg);
+  box-shadow:0 12px 32px rgba(29,158,117,0.25);
+}
+/* Animated ring around avatar */
+.avatar-wrap::after{
+  content:'';
+  position:absolute;
+  inset:-3px;
+  border-radius:50%;
+  border:2px solid var(--accent);
+  opacity:0;
+  transform:scale(0.9);
+  transition:opacity 0.4s ease, transform 0.4s var(--ease-out-expo);
+}
+.avatar-wrap:hover::after{
+  opacity:0.5;
+  transform:scale(1);
+}
+
+.hero-meta{font-size:12px;color:var(--hint);margin-bottom:6px;letter-spacing:0.04em}
+.hero-name{
+  font-family:'DM Serif Display',serif;
+  font-size:24px;font-weight:400;line-height:1.2;margin-bottom:10px;
+}
+
+/* Typewriter cursor */
+.typed-cursor{
+  display:inline-block;
+  width:2px;height:1em;
+  background:var(--accent);
+  margin-left:2px;
+  vertical-align:text-bottom;
+  animation:blink 1s step-end infinite;
+}
+@keyframes blink{
+  0%,100%{opacity:1}
+  50%{opacity:0}
+}
+
+.hero-bio{font-size:14px;color:var(--muted);line-height:1.7;max-width:500px}
+.hero-stats{display:flex;flex-wrap:wrap;gap:1rem;margin-top:1rem;align-items:center}
+.stat{font-size:13px;color:var(--muted)}
+.stat b{color:var(--text);font-weight:500}
+.stat a{color:var(--accent);text-decoration:none;transition:color 0.15s}
+.stat a:hover{text-decoration:underline;color:var(--accent-dark)}
+
+/* Animated article count */
+#total-count{
+  display:inline-block;
+  font-variant-numeric:tabular-nums;
+  transition:transform 0.2s ease;
+}
+
+/* ─── Toolbar ─────────────────────────────────────────── */
+.toolbar{display:flex;flex-direction:column;gap:10px;margin-bottom:1.25rem}
+.search-wrap{position:relative}
+.search-input{
+  width:100%;font-family:'DM Sans',sans-serif;font-size:14px;
+  padding:9px 14px 9px 38px;
+  border:1px solid var(--border);border-radius:8px;
+  background:var(--surface);color:var(--text);outline:none;
+  transition:border-color 0.2s ease, box-shadow 0.2s ease;
+}
+.search-input::placeholder{color:var(--hint)}
+.search-input:focus{
+  border-color:var(--accent);
+  box-shadow:0 0 0 3px rgba(29,158,117,0.12);
+}
+.search-icon{position:absolute;left:12px;top:50%;transform:translateY(-50%);opacity:0.4;pointer-events:none}
+.filters{display:flex;gap:7px;flex-wrap:wrap}
+.filter-btn{
+  font-family:'DM Sans',sans-serif;font-size:12px;
+  padding:5px 14px;border:1px solid var(--border);
+  border-radius:20px;background:transparent;color:var(--muted);
+  cursor:pointer;transition:all 0.2s ease;white-space:nowrap;
+}
+.filter-btn:hover{
+  border-color:var(--border-hover);color:var(--text);
+  transform:translateY(-1px);
+}
+.filter-btn.active{
+  background:var(--surface);color:var(--text);
+  border-color:var(--border-hover);font-weight:500;
+  box-shadow:0 2px 8px rgba(0,0,0,0.08);
+}
+
+/* ─── Section header ──────────────────────────────────── */
+.section-header{
+  display:flex;align-items:center;justify-content:space-between;
+  margin-bottom:1rem;
+}
+.section-label{
+  font-size:11px;font-weight:500;letter-spacing:0.09em;
+  text-transform:uppercase;color:var(--hint);
+}
+.count{font-size:13px;color:var(--hint);transition:opacity 0.2s ease}
+
+/* ─── Articles ────────────────────────────────────────── */
+.articles{display:flex;flex-direction:column}
+
+/* AOS-style scroll reveal for articles */
+.article{
+  display:grid;grid-template-columns:1fr 80px;gap:1rem;align-items:start;
+  padding:1rem 0;border-bottom:1px solid var(--border);
+  text-decoration:none;color:inherit;
+  transition:opacity 0.2s ease, transform 0.25s var(--ease-out-expo);
+  /* scroll reveal defaults */
+  opacity:0;
+  transform:translateY(12px);
+}
+.article:last-child{border-bottom:none}
+.article.visible{
+  opacity:1;
+  transform:translateY(0);
+}
+.article:hover{
+  opacity:0.7;
+  transform:translateY(-2px);
+}
+.art-tag{
+  font-size:11px;font-weight:500;letter-spacing:0.06em;
+  text-transform:uppercase;color:var(--hint);
+  margin-bottom:5px;display:flex;align-items:center;gap:6px;
+}
+.tag-dot{
+  display:inline-block;width:6px;height:6px;
+  border-radius:50%;flex-shrink:0;
+  transition:transform 0.2s ease;
+}
+.article:hover .tag-dot{transform:scale(1.5)}
+.art-title{
+  font-size:15px;font-weight:500;line-height:1.45;color:var(--text);
+  transition:color 0.15s ease;
+}
+.article:hover .art-title{color:var(--accent)}
+.art-date{font-size:12px;color:var(--hint);text-align:right;padding-top:2px}
+.empty{text-align:center;padding:3rem;color:var(--muted);font-size:14px}
+
+/* ─── Resume section ─────────────────────────────────── */
+.resume-section{
+  margin-top:3.5rem;padding-top:2.5rem;
+  border-top:1px solid var(--border);
+}
+.resume-section .section-header{margin-bottom:1.5rem}
+.resume-download-bar{
+  display:flex;align-items:center;gap:12px;
+  padding:14px 18px;
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:12px;
+  margin-bottom:1.75rem;
+  transition:border-color 0.2s ease, box-shadow 0.2s ease;
+}
+.resume-download-bar:hover{
+  border-color:rgba(29,158,117,0.4);
+  box-shadow:0 4px 16px rgba(29,158,117,0.08);
+}
+.resume-dl-icon{
+  width:36px;height:36px;border-radius:8px;
+  background:var(--accent-light);
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;
+}
+.resume-dl-icon svg{stroke:var(--accent);width:18px;height:18px}
+.resume-dl-text{flex:1}
+.resume-dl-name{font-size:14px;font-weight:500;color:var(--text)}
+.resume-dl-sub{font-size:12px;color:var(--hint);margin-top:1px}
+.resume-dl-btn{
+  font-family:'DM Sans',sans-serif;font-size:12px;font-weight:500;
+  padding:7px 16px;
+  background:var(--accent);color:#fff;
+  border:none;border-radius:20px;cursor:pointer;
+  text-decoration:none;
+  transition:background 0.2s ease, transform 0.2s ease;
+  white-space:nowrap;
+}
+.resume-dl-btn:hover{background:var(--accent-dark);transform:translateY(-1px)}
+
+/* Resume card content */
+.resume-card{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:12px;
+  overflow:hidden;
+}
+.resume-block{padding:1.25rem 1.5rem;border-bottom:1px solid var(--border)}
+.resume-block:last-child{border-bottom:none}
+.resume-block-label{
+  font-size:10px;font-weight:500;letter-spacing:0.1em;
+  text-transform:uppercase;color:var(--accent);
+  margin-bottom:0.85rem;
+}
+.resume-summary{font-size:13.5px;color:var(--muted);line-height:1.75}
+
+/* Experience rows */
+.exp-item{margin-bottom:1.25rem}
+.exp-item:last-child{margin-bottom:0}
+.exp-header{
+  display:flex;justify-content:space-between;
+  align-items:baseline;gap:8px;margin-bottom:2px;
+}
+.exp-role{font-size:14px;font-weight:500;color:var(--text)}
+.exp-date{font-size:11.5px;color:var(--hint);white-space:nowrap;flex-shrink:0}
+.exp-company{font-size:12.5px;color:var(--accent);margin-bottom:5px}
+.exp-bullets{list-style:none;padding:0}
+.exp-bullets li{
+  font-size:12.5px;color:var(--muted);line-height:1.65;
+  padding-left:14px;position:relative;margin-bottom:2px;
+}
+.exp-bullets li::before{
+  content:'·';position:absolute;left:2px;color:var(--accent);font-size:14px;
+}
+
+/* Skills grid */
+.skills-grid{display:flex;flex-wrap:wrap;gap:7px}
+.skill-tag{
+  font-size:12px;color:var(--accent-dark);
+  background:var(--accent-light);
+  padding:4px 12px;border-radius:20px;
+  border:1px solid rgba(29,158,117,0.15);
+}
+
+/* Education + Languages row */
+.resume-two-col{
+  display:grid;grid-template-columns:1fr 1fr;gap:0;
+}
+.resume-two-col .resume-block{border-right:1px solid var(--border);border-bottom:none}
+.resume-two-col .resume-block:last-child{border-right:none;border-bottom:none}
+.edu-degree{font-size:13.5px;font-weight:500;color:var(--text);margin-bottom:2px}
+.edu-school{font-size:12px;color:var(--muted)}
+.lang-item{font-size:13px;color:var(--muted);margin-bottom:3px}
+.lang-item b{color:var(--text);font-weight:500}
+
+@media(max-width:560px){
+  .exp-header{flex-direction:column;gap:2px}
+  .resume-two-col{grid-template-columns:1fr}
+  .resume-two-col .resume-block{border-right:none;border-bottom:1px solid var(--border)}
+  .resume-two-col .resume-block:last-child{border-bottom:none}
+}
+
+/* ─── Footer ──────────────────────────────────────────── */
+.footer{
+  margin-top:3rem;padding-top:1.75rem;
+  border-top:1px solid var(--border);
+  font-size:12px;color:var(--hint);line-height:1.7;
+}
+.footer a{color:var(--accent);text-decoration:none}
+.footer a:hover{text-decoration:underline}
+.footer-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-top:1rem}
+.footer-block b{
+  display:block;margin-bottom:4px;color:var(--muted);
+  font-weight:500;font-size:11px;text-transform:uppercase;letter-spacing:0.07em;
+}
+
+/* ─── Install PWA button ──────────────────────────────── */
+#install-btn{
+  display:none;font-family:'DM Sans',sans-serif;font-size:13px;
+  padding:8px 18px;border:1px solid var(--accent);
+  border-radius:20px;background:transparent;color:var(--accent);
+  cursor:pointer;transition:all 0.2s ease;
+}
+#install-btn:hover{
+  background:var(--accent);color:#fff;
+  transform:translateY(-1px);box-shadow:0 4px 14px rgba(29,158,117,0.3);
+}
+
+/* ─── Scroll progress bar ─────────────────────────────── */
+#progress-bar{
+  position:fixed;top:0;left:0;height:2px;width:0%;
+  background:linear-gradient(90deg,var(--accent),#5DCAA5);
+  z-index:999;transition:width 0.1s linear;
+}
+
+/* ─── Mobile ──────────────────────────────────────────── */
+@media(max-width:560px){
+  .hero{grid-template-columns:1fr}
+  .avatar,.avatar-wrap{width:68px;height:68px}
+  .hero-name{font-size:20px}
+  .article{grid-template-columns:1fr}
+  .art-date{display:none}
+  .footer-grid{grid-template-columns:1fr}
+}
+
+/* ─── Reduced motion ──────────────────────────────────── */
+@media(prefers-reduced-motion:reduce){
+  .anim-fade-up,.anim-scale-in,.anim-fade-in,.article{
+    animation:none!important;
+    opacity:1!important;
+    transform:none!important;
+  }
+  .orb{animation:none}
+  .avatar:hover{transform:none}
+  .filter-btn:hover{transform:none}
+  #install-btn:hover{transform:none}
+}
+</style>
+</head>
+<body>
+
+<!-- Scroll progress bar -->
+<div id="progress-bar"></div>
+
+<!-- Offline banner -->
+<div id="offline-banner">⚠ You're offline — showing cached portfolio</div>
+
+<!-- Ambient orbs -->
+<div class="orb orb-1"></div>
+<div class="orb orb-2"></div>
+
+<div class="wrap">
+
+  <!-- Hero -->
+  <header class="hero">
+    <div class="avatar-wrap anim-scale-in" style="animation-delay:0.05s">
+      <img class="avatar" src="Barong, Kimona and Formal (355).jpg" alt="Razel Jade Hijastro">
+    </div>
+    <div>
+      <div class="hero-meta anim-fade-up" style="animation-delay:0.1s">Crypto Writer · Web3 Analyst · Philippines</div>
+      <h1 class="hero-name anim-fade-up" style="animation-delay:0.18s">
+        <span id="typed-name"></span><span class="typed-cursor"></span>
+      </h1>
+      <p class="hero-bio anim-fade-up" style="animation-delay:0.28s">Writing about Web3 without cheerleading for it — the hype, the blowups, and the occasional thing that actually works. DYOR is still the rule. I just try to make the research less painful.</p>
+      <div class="hero-stats anim-fade-up" style="animation-delay:0.38s">
+        <div class="stat"><b id="total-count">0</b> published articles</div>
+        <div class="stat"><b>2025–2026</b></div>
+        <div class="stat"><b><a href="https://www.lbank.com/creator/profile/675b7fb016824d0b8f45310ae3a4dc35" target="_blank" rel="noopener">LBank Creator ↗</a></b></div>
+        <button id="install-btn">📥 Add to Home Screen</button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- Toolbar -->
+    <div class="toolbar anim-fade-up" style="animation-delay:0.45s">
+      <div class="search-wrap">
+        <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        <input class="search-input" type="search" id="search" placeholder="Search articles…" autocomplete="off">
+      </div>
+      <div class="filters" id="filter-bar"></div>
+    </div>
+
+    <div class="section-header anim-fade-in" style="animation-delay:0.5s">
+      <span class="section-label">Portfolio</span>
+      <span class="count" id="count-label">72 articles</span>
+    </div>
+
+    <div class="articles" id="articles-list"></div>
+  </main>
+
+  <!-- ── Resume Section ──────────────────────────────────────── -->
+  <section class="resume-section anim-fade-up" style="animation-delay:0.1s">
+    <div class="section-header">
+      <span class="section-label">Resume</span>
+    </div>
+
+    <!-- Download bar -->
+    <div class="resume-download-bar">
+      <div class="resume-dl-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+          <polyline points="14 2 14 8 20 8"/>
+          <line x1="12" y1="18" x2="12" y2="12"/>
+          <polyline points="9 15 12 18 15 15"/>
+        </svg>
+      </div>
+      <div class="resume-dl-text">
+        <div class="resume-dl-name">Razel Jade Hijastro — Resume</div>
+        <div class="resume-dl-sub">PDF · Updated May 2026</div>
+      </div>
+      <a class="resume-dl-btn" href="Razel-Jade-Hijastro-Resume.pdf" download>Download PDF</a>
+    </div>
+
+    <!-- Resume card -->
+    <div class="resume-card">
+
+      <!-- Summary -->
+      <div class="resume-block">
+        <div class="resume-block-label">Professional Summary</div>
+        <p class="resume-summary">Crypto and Web3 content specialist with 3+ years of experience producing institutional-grade analysis across leading exchanges. Track record covering Bitcoin adoption, DeFi mechanics, regulatory developments, and market structure for global audiences. Combines editorial rigour with community strategy — having led cross-platform teams at Bitget and MEXC during high-volatility market cycles.</p>
+      </div>
+
+      <!-- Experience -->
+      <div class="resume-block">
+        <div class="resume-block-label">Professional Experience</div>
+
+        <div class="exp-item">
+          <div class="exp-header">
+            <span class="exp-role">External Content Writer</span>
+            <span class="exp-date">Jul 2025 – Present</span>
+          </div>
+          <div class="exp-company">LBank Exchange</div>
+          <ul class="exp-bullets">
+            <li>Produces analytical articles on institutional Bitcoin adoption, ETF flows, regulatory developments, and DeFi protocol mechanics for LBank's global publication platform.</li>
+            <li>Maintains SEO-optimised editorial standards with strict sourcing requirements — government data, financial institution reports, and primary research.</li>
+            <li>Covers emerging policy themes including stablecoin legislation, CBDC surveillance implications, and tokenised securities frameworks.</li>
+          </ul>
+        </div>
+
+        <div class="exp-item">
+          <div class="exp-header">
+            <span class="exp-role">Assistant Manager, TikTok Team</span>
+            <span class="exp-date">Jul 2023 – Nov 2024</span>
+          </div>
+          <div class="exp-company">Bitget</div>
+          <ul class="exp-bullets">
+            <li>Supervised creator partnerships to expand Bitget's brand reach on TikTok across Southeast Asia.</li>
+            <li>Developed campaigns balancing educational crypto content with platform algorithm optimisation, improving organic reach and follower retention.</li>
+            <li>Managed creator onboarding pipelines, performance evaluation frameworks, and content guideline enforcement.</li>
+          </ul>
+        </div>
+
+        <div class="exp-item">
+          <div class="exp-header">
+            <span class="exp-role">Content Writer</span>
+            <span class="exp-date">Feb 2023 – Jul 2023</span>
+          </div>
+          <div class="exp-company">MEXC Global</div>
+          <ul class="exp-bullets">
+            <li>Authored market analysis articles covering token launches, regulatory updates, and on-chain activity.</li>
+            <li>Recognised as top performer for consistent output quality and engagement metrics across a six-month tenure.</li>
+          </ul>
+        </div>
+
+        <div class="exp-item">
+          <div class="exp-header">
+            <span class="exp-role">Senior Team Manager</span>
+            <span class="exp-date">Oct 2022 – May 2023</span>
+          </div>
+          <div class="exp-company">MEXC Global</div>
+          <ul class="exp-bullets">
+            <li>Led cross-platform social media team managing brand presence on Twitter, Telegram, Discord, and regional community channels.</li>
+            <li>Implemented content strategies that drove measurable follower growth during elevated crypto market volatility.</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Skills -->
+      <div class="resume-block">
+        <div class="resume-block-label">Core Skills</div>
+        <div class="skills-grid">
+          <span class="skill-tag">Analytical Writing</span>
+          <span class="skill-tag">SEO Optimisation</span>
+          <span class="skill-tag">Editorial Research</span>
+          <span class="skill-tag">Crypto Market Analysis</span>
+          <span class="skill-tag">Regulatory Coverage</span>
+          <span class="skill-tag">DeFi &amp; Blockchain</span>
+          <span class="skill-tag">Community Management</span>
+          <span class="skill-tag">Team Leadership</span>
+          <span class="skill-tag">Remote Team Management</span>
+        </div>
+      </div>
+
+      <!-- Education + Languages -->
+      <div class="resume-two-col">
+        <div class="resume-block">
+          <div class="resume-block-label">Education</div>
+          <div class="edu-degree">BS in Civil Engineering</div>
+          <div class="edu-school">Southern Mindanao Colleges</div>
+        </div>
+        <div class="resume-block">
+          <div class="resume-block-label">Languages</div>
+          <div class="lang-item"><b>English</b> — Professional</div>
+          <div class="lang-item"><b>Filipino</b> — Native</div>
+          <div class="lang-item"><b>Cebuano</b> — Native</div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <footer class="footer anim-fade-up" style="animation-delay:0.2s">
+    <p>Originally published on <a href="https://www.lbank.com/creator/profile/675b7fb016824d0b8f45310ae3a4dc35" target="_blank" rel="noopener">LBank Creator</a>. This is a personal portfolio backup — all articles link to their original published versions.</p>
+    <div class="footer-grid">
+      <div class="footer-block">
+        <b>Coverage</b>
+        Cryptocurrency markets, blockchain regulation, DeFi protocols, Web3 industry news, Bitcoin analysis, stablecoins, NFTs, and crypto investment research.
+      </div>
+      <div class="footer-block">
+        <b>Offline access</b>
+        This portfolio works offline once visited. All 72 article links and metadata are stored locally in your browser.
+      </div>
+    </div>
+  </footer>
+</div>
+
+<script>
+/* ─── Data ─────────────────────────────────────────────── */
+const articles = [
+  // May 2026
+  {title:"RISCOIN's Philippine Recruitment Drive: A Growing Concern That Regulators Are Now Taking Seriously",tag:"Regulation",date:"2026-05-07",url:"https://www.lbank.com/creator/riscoin-philippine-recruitment-drive-regulators-concern"},
+  {title:"Fake Crypto Wallets Designed to Drain Digital Assets Identified on Apple App Store",tag:"Security",date:"2026-05-07",url:"https://www.lbank.com/creator/fake-crypto-wallets-drain-digital-assets-apple-app-store"},
+  {title:"Metaplanet Raises $50 Million in Zero-Interest Bonds to Buy More Bitcoin",tag:"Bitcoin",date:"2026-05-07",url:"https://www.lbank.com/creator/metaplanet-buy-bitcoin-50m-bonds"},
+  {title:"Trump-Linked American Bitcoin Energizes 11,298 New ASICs",tag:"Bitcoin",date:"2026-05-06",url:"https://www.lbank.com/creator/trump-linked-american-bitcoin-energizes-11298-new-asics"},
+  {title:"Rand on a Leash: South Africa Wants to Track Every Crypto Move You Make Across Its Borders",tag:"Regulation",date:"2026-05-06",url:"https://www.lbank.com/creator/rand-on-leash-south-africa-track-crypto-move-borders"},
+  {title:"CZ's Message to Anyone Hitting Rock Bottom: 'Keep Walking' — And He's Speaking From Experience",tag:"Industry",date:"2026-05-06",url:"https://www.lbank.com/creator/cz-message-rock-bottom-keep-walking-experience"},
+  {title:"Bitcoin Buyers Show 'Renewed Conviction' with BTC Price Push Above $79K",tag:"Bitcoin",date:"2026-05-06",url:"https://www.lbank.com/creator/bitcoin-buyers-renewed-conviction-btc-price-push-79k"},
+  {title:"Uzbekistan Creates State-Backed Crypto Mining Zone with Tax Breaks",tag:"Regulation",date:"2026-05-06",url:"https://www.lbank.com/creator/uzbekistan-state-backed-crypto-mining-zone-tax-breaks"},
+  {title:"China Turns Up the Heat: What Beijing's New Online Marketing Rules Actually Mean for Crypto",tag:"Regulation",date:"2026-05-06",url:"https://www.lbank.com/creator/china-beijing-marketing-rules-crypto"},
+  {title:"Crypto PAC's Texas Ad Pause Signals a Shift in Political Strategy",tag:"Industry",date:"2026-05-05",url:"https://www.lbank.com/creator/crypto-pacs-texas-ad-pause-signals-shift-political-strategy"},
+  {title:"Philippines SEC Flags dYdX and Six Crypto Platforms as Unauthorized",tag:"Regulation",date:"2026-05-05",url:"https://www.lbank.com/creator/philippines-sec-flags-dydx-six-crypto-platforms-unauthorized"},
+  {title:"Ethereum Price Prediction 2026: Can ETH Break Its All-Time High?",tag:"Ethereum",date:"2026-05-04",url:"https://www.lbank.com/creator/ethereum-price-prediction-2026-eth-ath"},
+  {title:"South Korea's Tax Agency Opens Bidding for a Crypto Tracing Tool",tag:"Regulation",date:"2026-05-04",url:"https://www.lbank.com/creator/south-koreas-tax-agency-opens-bidding-crypto-tracing-tool"},
+  {title:"Scammers Are Demanding Crypto from Ships Stranded in the Strait of Hormuz",tag:"Security",date:"2026-05-03",url:"https://www.lbank.com/creator/scammers-demand-crypto-stranded-ships-strait-of-hormuz"},
+  {title:"Hong Kong Licenses HKD Stablecoins — and Banks Are Leading the Charge",tag:"Stablecoins",date:"2026-05-03",url:"https://www.lbank.com/creator/hong-kong-licenses-hkd-stablecoins-banks-lead"},
+  {title:"Bhutan Is Quietly Selling Its Bitcoin and Nobody Knows Why",tag:"Bitcoin",date:"2026-05-02",url:"https://www.lbank.com/creator/bhutan-quietly-selling-bitcoin-nobody-knows-why"},
+  {title:"An ETH Valuation Metric Just Hit Its 2022 Level — What That Means for a Rally to $2.5K",tag:"Ethereum",date:"2026-05-02",url:"https://www.lbank.com/creator/eth-valuation-metric-hits-2022-level-rally-2-5k"},
+  {title:"Japan Just Reclassified Crypto as a Financial Instrument — Here's What Changes",tag:"Regulation",date:"2026-05-01",url:"https://www.lbank.com/creator/japan-reclassified-crypto-financial-instrument-changes"},
+  // April 2026
+  {title:"Bitcoin Just Hit $73K — What Happens Next?",tag:"Bitcoin",date:"2026-04-30",url:"https://www.lbank.com/creator/bitcoin-hit-73k-what-happens-next"},
+  {title:"Bitcoin Didn't Wait for a Ceasefire — the Headlines Were Enough",tag:"Bitcoin",date:"2026-04-29",url:"https://www.lbank.com/creator/bitcoin-didnt-wait-ceasefire-headlines-were-enough"},
+  {title:"MicroStrategy Didn't Blink — It Repositioned",tag:"Bitcoin",date:"2026-04-28",url:"https://www.lbank.com/creator/microstrategy-didnt-blink-repositioned"},
+  {title:"Trump's Iran Deadline: How Chaos Breaks Markets and Crypto Rises Anyway",tag:"Industry",date:"2026-04-27",url:"https://www.lbank.com/creator/trump-iran-deadline-chaos-breaks-markets-crypto-rises-anyway"},
+  {title:"Kiyosaki Says Buy Bitcoin and Gold — His 74% Shift Explains Why",tag:"Bitcoin",date:"2026-04-26",url:"https://www.lbank.com/creator/kiyosaki-buy-bitcoin-and-gold-74-shift"},
+  {title:"Ark Invest Sees One-Third of Bitcoin Supply at Risk From Quantum Threat",tag:"Bitcoin",date:"2026-04-25",url:"https://www.lbank.com/creator/ark-invest-bitcoin-quantum-threat"},
+  {title:"DAOs Are Not Doomed — They Just Need to Evolve, Says Aave Founder",tag:"DeFi",date:"2026-04-25",url:"https://www.lbank.com/creator/daos-not-doomed-evolve-aave-founder"},
+  {title:"Bitcoin ETFs Gain $251M as Goldman Sachs Leads a New Wave of XRP ETF Holders",tag:"Bitcoin",date:"2026-04-24",url:"https://www.lbank.com/creator/bitcoin-etfs-gain-251m-goldman-sachs-leads-xrp-etf-holders"},
+  {title:"US Seeks Forfeiture of $34M USDT Tied to Crypto Investment Scam",tag:"Security",date:"2026-04-23",url:"https://www.lbank.com/creator/us-seeks-forfeiture-34m-usdt-tied-crypto-investment-scam"},
+  {title:"India Arrests Darwin Labs Co-Founder in $10B GainBitcoin Scam",tag:"Security",date:"2026-04-22",url:"https://www.lbank.com/creator/india-arrests-darwin-labs-co-founder-gainbitcoin-scam"},
+  {title:"Higher CPI Print for March Was Already Baked Into BTC Price, Say Analysts",tag:"Bitcoin",date:"2026-04-21",url:"https://www.lbank.com/creator/higher-cpi-print-march-already-baked-btc-price-analysts"},
+  {title:"FDIC Chair: No Deposit Insurance for Stablecoins Under the GENIUS Act",tag:"Stablecoins",date:"2026-04-20",url:"https://www.lbank.com/creator/fdic-chair-no-deposit-insurance-stablecoins-genius-act"},
+  {title:"Mastercard's Crypto Partner Program: Who's Who in the Industry",tag:"Industry",date:"2026-04-19",url:"https://www.lbank.com/creator/mastercard-crypto-partner-program-whos-who-industry"},
+  {title:"Ripple to Buy Back $750M in Shares Through April — What's Going On?",tag:"Industry",date:"2026-04-18",url:"https://www.lbank.com/creator/ripple-buy-back-750m-shares-through-april-what-going-on"},
+  {title:"Tokenized Assets Climb to $23.6B as Investors Seek Always-On Markets",tag:"Tokenization",date:"2026-04-17",url:"https://www.lbank.com/creator/tokenized-assets-climb-23-6b-investors-seek-always-on-markets"},
+  {title:"SCOTUS Voids Trump Tariffs: What It Means for Bitcoin, Volatility, and Inflation",tag:"Industry",date:"2026-04-16",url:"https://www.lbank.com/creator/scotus-voids-trump-tariffs-bitcoin-volatility-inflation"},
+  {title:"Dutch Regulator Fines Polymarket $840K Over Crypto Prediction Markets",tag:"Regulation",date:"2026-04-15",url:"https://www.lbank.com/creator/dutch-regulator-fines-polymarket-crypto-840k"},
+  {title:"Dubai Tokenized Property Trading, WLFI Maldives Resort, and the New Crypto Real Estate Playbook",tag:"Tokenization",date:"2026-04-14",url:"https://www.lbank.com/creator/dubai-tokenized-property-trading-wlfi-maldives-resort"},
+  {title:"MARA's Exaion Acquisition: How Bitcoin Mining and AI Are Merging",tag:"Industry",date:"2026-04-13",url:"https://www.lbank.com/creator/mara-exaion-acquisition-bitcoin-ai-mining-evolution"},
+  {title:"South Korea Hacker Returns Bitcoin — Here's the Complicated Reason Why",tag:"Security",date:"2026-04-12",url:"https://www.lbank.com/creator/south-korea-hacker-returns-bitcoin"},
+  {title:"Bitdeer Sells 943 BTC from Treasury, Leaving the Miner at Near-Zero Holdings",tag:"Bitcoin",date:"2026-04-11",url:"https://www.lbank.com/creator/bitdeer-sells-943-btc-treasury-miner-zero-holdings"},
+  {title:"Warsh's $250B Crypto Wipeout Warning: What the Fed Risk Signal Actually Means",tag:"Bitcoin",date:"2026-04-10",url:"https://www.lbank.com/creator/warsh-250b-crypto-wipeout-bitcoin-17-fed-risk"},
+  {title:"Tether Froze $544M in Turkey — What That Tells Us About Stablecoin Enforcement",tag:"Stablecoins",date:"2026-04-09",url:"https://www.lbank.com/creator/tether-544m-turkey-freeze-stablecoins-enforcement"},
+  {title:"Hong Kong Stablecoin Licenses: Why So Few Approvals — and Why March Matters",tag:"Stablecoins",date:"2026-04-08",url:"https://www.lbank.com/creator/hong-kong-stablecoin-licenses-few-approvals-march-matters"},
+  {title:"Satoshi-Era Whale Dumps $1.3 Billion in Bitcoin After 14 Years of Silence",tag:"Bitcoin",date:"2026-04-07",url:"https://www.lbank.com/creator/satoshi-era-whale-dumps-1-3-billion-bitcoin-14-years"},
+  // March 2026
+  {title:"Hype vs. Maturity: Which 2026 Crypto Trends Will Outlast the Crash?",tag:"Industry",date:"2026-03-30",url:"https://www.lbank.com/creator/hype-maturity-2026-crypto-trends-outlast-crash"},
+  {title:"Crypto PACs Gear Up for the 2026 Midterms — and the Influence Risk Is Real",tag:"Industry",date:"2026-03-28",url:"https://www.lbank.com/creator/crypto-pacs-gear-up-2026-midterms-influence-risk"},
+  {title:"The $150,000 Question: Why Bitcoin's December Range Still Matters",tag:"Bitcoin",date:"2026-03-25",url:"https://www.lbank.com/creator/150000-question-bitcoin-december-range-matters"},
+  {title:"Social Engineering Is Unhackable — The $282M Loss That Proves It",tag:"Security",date:"2026-03-22",url:"https://www.lbank.com/creator/social-engineering-unhackable-crypto-security-282m-loss"},
+  {title:"The High Priests Problem: Is Ethereum's Complexity Its Biggest Threat?",tag:"Ethereum",date:"2026-03-20",url:"https://www.lbank.com/creator/high-priests-problem-ethereum-complexity-threat"},
+  {title:"The Tokenization Supercycle: How Wall Street Is Putting Real Assets On-Chain",tag:"Tokenization",date:"2026-03-18",url:"https://www.lbank.com/creator/tokenization-supercycle-wall-street-real-assets-on-chain"},
+  {title:"AI Romance Meets Crypto Fraud: Hong Kong's $46M Wake-Up Call",tag:"Security",date:"2026-03-15",url:"https://www.lbank.com/creator/ai-romance-crypto-fraud-hong-kong-46m-wake-up-call"},
+  {title:"September 2026 Deadline: The Rule That Could Kill UK Crypto Businesses",tag:"Regulation",date:"2026-03-12",url:"https://www.lbank.com/creator/september-2026-deadline-kill-uk-crypto-business"},
+  {title:"Venezuela's $60 Billion Shadow: Bitcoin's Expanding Geopolitical Role",tag:"Bitcoin",date:"2026-03-10",url:"https://www.lbank.com/creator/venezuela-60-billion-bitcoin-geopolitical-crypto"},
+  {title:"CZ's Supercycle Call: Stop Hunting Crypto — Build It Instead",tag:"Industry",date:"2026-03-08",url:"https://www.lbank.com/creator/czs-supercycle-call-regulators-stop-hunting-crypto"},
+  {title:"Ripple's UK Breakthrough: Cross-Border Crypto Payments Get Regulatory Approval",tag:"Industry",date:"2026-03-06",url:"https://www.lbank.com/creator/ripple-uk-breakthrough-cross-border-crypto-payments-approval"},
+  {title:"South Korea's Bitcoin Seizure Ruling: Inside the $33 Billion Legal Shield",tag:"Regulation",date:"2026-03-04",url:"https://www.lbank.com/creator/south-korea-bitcoin-seizure-ruling-33-billion-legal-shield"},
+  // Earlier 2026
+  {title:"$657 Million Floods Into Crypto Portfolio — and There's a Nasty Surprise",tag:"Industry",date:"2026-02-28",url:"https://www.lbank.com/creator/657-million-flood-crypto-portfolio-nasty-surprise"},
+  {title:"Wall Street's Crypto Endgame: The Holdouts Are Finally Caving",tag:"Industry",date:"2026-02-25",url:"https://www.lbank.com/creator/wall-street-crypto-endgame-holdouts-finally-cave"},
+  {title:"Vitalik Says Ethereum Has Solved Crypto's Impossible Problem",tag:"Ethereum",date:"2026-02-22",url:"https://www.lbank.com/creator/vitalik-ethereum-solved-cryptos-impossible-problem"},
+  {title:"End of Crypto Tax Anonymity: 48 Countries Just Flipped the Switch",tag:"Regulation",date:"2026-02-20",url:"https://www.lbank.com/creator/end-crypto-tax-anonymity-48-countries-flipped-switch"},
+  {title:"$11 Trillion Bursts Into Crypto in a Blink — Vanguard's Surrender Explained",tag:"Industry",date:"2026-02-18",url:"https://www.lbank.com/creator/11-trillion-bursts-blink-vanguard-surrender-crypto"},
+  {title:"Trump's 2025 Crypto Revolution: From Campaign Promises to Federal Law",tag:"Regulation",date:"2026-02-15",url:"https://www.lbank.com/creator/trump-2025-crypto-revolution-campaign-promises-federal-law"},
+  {title:"DeFAI Breakthrough: How AI Agents Are Fixing Crypto's Biggest Problem",tag:"DeFi",date:"2026-02-12",url:"https://www.lbank.com/creator/defai-breakthrough-ai-agents-fixing-crypto-problem"},
+  {title:"$50 Million in Crypto Lost in Seconds — All Because of Copy-Paste",tag:"Security",date:"2026-02-10",url:"https://www.lbank.com/creator/50-million-crypto-lost-seconds-copy-paste"},
+  {title:"The 2026 Tokenization Boom: Navigating the Market Dip",tag:"Tokenization",date:"2026-02-08",url:"https://www.lbank.com/creator/2026-tokenization-boom-market-dip"},
+  {title:"Sovereign Gold on Blockchain: Bhutan, TER, and the Crypto Adoption Wave",tag:"Tokenization",date:"2026-02-05",url:"https://www.lbank.com/creator/sovereign-gold-blockchain-bhutan-ter-crypto-adoption-wave"},
+  {title:"A Phishing Attack That Bypassed Everything — DeFi's Security Problem",tag:"Security",date:"2026-02-03",url:"https://www.lbank.com/creator/phishing-attack-bypassed-everything-defi-security-problem"},
+  {title:"Wall Street Builds the Infrastructure Crypto Always Touted",tag:"Industry",date:"2026-02-01",url:"https://www.lbank.com/creator/wall-street-builds-infrastructure-crypto-touted"},
+  {title:"Digital Dollars and the Threat to Central Banks: The IMF's Stablecoin Warning",tag:"Stablecoins",date:"2026-01-28",url:"https://www.lbank.com/creator/digital-dollars-threat-central-banks-imf-stablecoin-warning"},
+  {title:"Ethereum's Quiet Upgrade: Why This Infrastructure Improvement Matters",tag:"Ethereum",date:"2026-01-25",url:"https://www.lbank.com/creator/ethereum-quiet-upgrade-infrastructure-improves"},
+  {title:"The Crypto Phone: Solana Mobile's SKR Bet on Web3 Hardware",tag:"Industry",date:"2026-01-22",url:"https://www.lbank.com/creator/crypto-phone-solana-mobile-skr-bet"},
+  {title:"Singapore's Cross-Border Payments Upgrade — and Why It Matters for Crypto",tag:"Industry",date:"2026-01-20",url:"https://www.lbank.com/creator/singapore-cross-border-payments-why-it-matters"},
+];
+
+/* ─── Tag colors ────────────────────────────────────────── */
+const tagColors={
+  "Bitcoin":"#E5860A","Ethereum":"#5865F2","Regulation":"#D4537E","Security":"#E24B4A",
+  "Industry":"#1D9E75","Stablecoins":"#0F6E56","DeFi":"#7F77DD","Tokenization":"#185FA5","NFT":"#D85A30"
+};
+const tags=[...new Set(articles.map(a=>a.tag))].sort();
+let activeTag="All",query="";
+
+/* ─── Scroll progress bar ───────────────────────────────── */
+const progressBar=document.getElementById('progress-bar');
+window.addEventListener('scroll',()=>{
+  const scrolled=window.scrollY;
+  const total=document.documentElement.scrollHeight-window.innerHeight;
+  progressBar.style.width=(total>0?(scrolled/total*100):0)+'%';
+},{passive:true});
+
+/* ─── Typewriter effect ─────────────────────────────────── */
+function typeWriter(el,text,speed,onDone){
+  let i=0;
+  el.textContent='';
+  function tick(){
+    if(i<text.length){
+      el.textContent+=text[i++];
+      setTimeout(tick,speed);
+    } else if(onDone) onDone();
+  }
+  tick();
+}
+
+/* ─── Count-up animation ────────────────────────────────── */
+function countUp(el,target,duration){
+  const start=performance.now();
+  function tick(now){
+    const elapsed=now-start;
+    const progress=Math.min(elapsed/duration,1);
+    // ease out quad
+    const eased=1-(1-progress)*(1-progress);
+    el.textContent=Math.floor(eased*target);
+    if(progress<1) requestAnimationFrame(tick);
+    else el.textContent=target;
+  }
+  requestAnimationFrame(tick);
+}
+
+/* ─── Filters ───────────────────────────────────────────── */
+function buildFilters(){
+  const bar=document.getElementById('filter-bar');
+  const mk=(label,tag)=>{
+    const b=document.createElement('button');
+    b.className='filter-btn'+(tag==='All'?' active':'');
+    b.textContent=label;
+    b.onclick=()=>setFilter(tag,b);
+    bar.appendChild(b);
+  };
+  mk('All','All');
+  tags.forEach(t=>{
+    const c=articles.filter(a=>a.tag===t).length;
+    mk(`${t} (${c})`,t);
+  });
+}
+
+function setFilter(tag,clickedBtn){
+  activeTag=tag;
+  document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+  if(clickedBtn) clickedBtn.classList.add('active');
+  render();
+}
+
+/* ─── Scroll reveal via IntersectionObserver ────────────── */
+let observer;
+function setupObserver(){
+  observer=new IntersectionObserver((entries)=>{
+    entries.forEach((entry,i)=>{
+      if(entry.isIntersecting){
+        // stagger by index in list
+        const el=entry.target;
+        const delay=parseInt(el.dataset.delay||0);
+        setTimeout(()=>el.classList.add('visible'),delay);
+        observer.unobserve(el);
+      }
+    });
+  },{threshold:0.05,rootMargin:'0px 0px -40px 0px'});
+}
+
+/* ─── Render articles ───────────────────────────────────── */
+function render(){
+  const q=query.toLowerCase().trim();
+  const filtered=articles.filter(a=>{
+    const tagOk=activeTag==='All'||a.tag===activeTag;
+    const searchOk=!q||a.title.toLowerCase().includes(q)||a.tag.toLowerCase().includes(q)||a.date.includes(q);
+    return tagOk&&searchOk;
+  });
+
+  const countLabel=document.getElementById('count-label');
+  countLabel.style.opacity='0';
+  setTimeout(()=>{
+    countLabel.textContent=`${filtered.length} article${filtered.length!==1?'s':''}`;
+    countLabel.style.opacity='1';
+  },150);
+
+  const list=document.getElementById('articles-list');
+  list.innerHTML='';
+
+  if(!filtered.length){
+    list.innerHTML='<div class="empty">No articles match — try a different search or filter.</div>';
+    return;
+  }
+
+  filtered.forEach((a,i)=>{
+    const el=document.createElement('a');
+    el.className='article';
+    el.href=a.url;
+    el.target='_blank';
+    el.rel='noopener noreferrer';
+    el.dataset.delay=Math.min(i*30,300); // stagger up to 300ms
+    const color=tagColors[a.tag]||'#888780';
+    el.innerHTML=`<div><div class="art-tag"><span class="tag-dot" style="background:${color}"></span>${a.tag}</div><div class="art-title">${a.title}</div></div><div class="art-date">${a.date}</div>`;
+    list.appendChild(el);
+    if(observer) observer.observe(el);
+  });
+}
+
+/* ─── Search ────────────────────────────────────────────── */
+document.getElementById('search').addEventListener('input',e=>{
+  query=e.target.value;
+  render();
+});
+
+/* ─── Init ──────────────────────────────────────────────── */
+setupObserver();
+buildFilters();
+render();
+
+// Typewriter on name — starts after hero fades in
+setTimeout(()=>{
+  typeWriter(
+    document.getElementById('typed-name'),
+    'Razel Jade Hijastro',
+    55
+  );
+},300);
+
+// Count-up on article number
+setTimeout(()=>{
+  countUp(document.getElementById('total-count'),72,1200);
+},500);
+
+/* ─── PWA install ───────────────────────────────────────── */
+let deferredPrompt;
+window.addEventListener('beforeinstallprompt',e=>{
+  e.preventDefault();deferredPrompt=e;
+  document.getElementById('install-btn').style.display='inline-block';
+});
+document.getElementById('install-btn').onclick=async()=>{
+  if(!deferredPrompt)return;
+  deferredPrompt.prompt();
+  const{outcome}=await deferredPrompt.userChoice;
+  if(outcome==='accepted')document.getElementById('install-btn').style.display='none';
+  deferredPrompt=null;
+};
+
+/* ─── Online/offline detection ──────────────────────────── */
+function checkOnline(){document.body.classList.toggle('offline',!navigator.onLine);}
+window.addEventListener('online',checkOnline);
+window.addEventListener('offline',checkOnline);
+checkOnline();
+
+/* ─── Service Worker ────────────────────────────────────── */
+if('serviceWorker' in navigator){
+  navigator.serviceWorker.register('sw.js').catch(()=>{});
+}
+</script>
+</body>
+</html>
