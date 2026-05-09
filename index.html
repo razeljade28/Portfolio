@@ -276,6 +276,16 @@ body.offline #offline-banner{display:block}
 }
 .article:hover .art-title{color:var(--accent)}
 .art-date{font-size:12px;color:var(--hint);text-align:right;padding-top:2px}
+.art-meta{display:flex;flex-direction:column;align-items:flex-end;gap:5px}
+.local-badge{
+  display:inline-flex;align-items:center;gap:4px;
+  font-size:10px;font-weight:500;letter-spacing:0.05em;
+  text-transform:uppercase;
+  color:var(--accent-dark);background:var(--accent-light);
+  padding:2px 7px;border-radius:10px;
+  white-space:nowrap;
+}
+.local-badge svg{flex-shrink:0}
 .empty{text-align:center;padding:3rem;color:var(--muted);font-size:14px}
 
 /* ─── Resume section ─────────────────────────────────── */
@@ -629,8 +639,8 @@ body.offline #offline-banner{display:block}
 /* ─── Data ─────────────────────────────────────────────── */
 const articles = [
   // May 2026
-  {title:"RISCOIN's Philippine Recruitment Drive: A Growing Concern That Regulators Are Now Taking Seriously",tag:"Regulation",date:"2026-05-07",url:"https://www.lbank.com/creator/riscoin-philippine-recruitment-drive-regulators-concern"},
-  {title:"Fake Crypto Wallets Designed to Drain Digital Assets Identified on Apple App Store",tag:"Security",date:"2026-05-07",url:"https://www.lbank.com/creator/fake-crypto-wallets-drain-digital-assets-apple-app-store"},
+  {title:"RISCOIN's Philippine Recruitment Drive: A Growing Concern That Regulators Are Now Taking Seriously",tag:"Regulation",date:"2026-05-07",url:"https://www.lbank.com/creator/riscoin-philippine-recruitment-drive-regulators-concern", local:"file:///D:/Portfolio/Articles/RISCOIN's%20Philippine%20Recruitment%20Drive_%20A%20Growing%20Concern%20That%20Regulators%20Are%20Now%20Taking%20Seriously%20_%20LBank%20Creator%20_%20LBank.mhtml},
+  {title:"Fake Crypto Wallets Designed to Drain Digital Assets Identified on Apple App Store",tag:"Security",date:"2026-05-07",url:"https://www.lbank.com/creator/fake-crypto-wallets-drain-digital-assets-apple-app-store", local:"Fake Crypto Wallets Designed to Drain Digital Assets Identified on Apple App Store _ LBank Creator _ LBank.mhtml},
   {title:"Metaplanet Raises $50 Million in Zero-Interest Bonds to Buy More Bitcoin",tag:"Bitcoin",date:"2026-05-07",url:"https://www.lbank.com/creator/metaplanet-buy-bitcoin-50m-bonds"},
   {title:"Trump-Linked American Bitcoin Energizes 11,298 New ASICs",tag:"Bitcoin",date:"2026-05-06",url:"https://www.lbank.com/creator/trump-linked-american-bitcoin-energizes-11298-new-asics"},
   {title:"Rand on a Leash: South Africa Wants to Track Every Crypto Move You Make Across Its Borders",tag:"Regulation",date:"2026-05-06",url:"https://www.lbank.com/creator/rand-on-leash-south-africa-track-crypto-move-borders"},
@@ -816,12 +826,16 @@ function render(){
   filtered.forEach((a,i)=>{
     const el=document.createElement('a');
     el.className='article';
-    el.href=a.url;
+    // If a local .mhtml file exists, open that; otherwise fall back to LBank URL
+    el.href=a.local?`articles/${a.local}`:a.url;
     el.target='_blank';
     el.rel='noopener noreferrer';
     el.dataset.delay=Math.min(i*30,300); // stagger up to 300ms
     const color=tagColors[a.tag]||'#888780';
-    el.innerHTML=`<div><div class="art-tag"><span class="tag-dot" style="background:${color}"></span>${a.tag}</div><div class="art-title">${a.title}</div></div><div class="art-date">${a.date}</div>`;
+    const localBadge=a.local
+      ?`<span class="local-badge"><svg width="9" height="9" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 1L1 4v6h3.5V7h3v3H11V4L6 1z" fill="currentColor"/></svg>Local</span>`
+      :'';
+    el.innerHTML=`<div><div class="art-tag"><span class="tag-dot" style="background:${color}"></span>${a.tag}</div><div class="art-title">${a.title}</div></div><div class="art-meta"><div class="art-date">${a.date}</div>${localBadge}</div>`;
     list.appendChild(el);
     if(observer) observer.observe(el);
   });
