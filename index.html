@@ -8,13 +8,16 @@
 <meta name="theme-color" content="#1D9E75">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
+
 <style>
+/* ─── Reset & Variables ──────────────────────────────── */
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
   --bg:#f9f8f5;--surface:#ffffff;--text:#1a1a18;--muted:#6b6b66;--hint:#9d9d98;
   --border:rgba(0,0,0,0.09);--border-hover:rgba(0,0,0,0.18);
   --accent:#1D9E75;--accent-light:#E1F5EE;--accent-dark:#0F6E56;
   --blue:#185FA5;--amber:#BA7517;
+  --ease-out-expo: cubic-bezier(0.16,1,0.3,1);
 }
 @media(prefers-color-scheme:dark){
   :root{
@@ -24,89 +27,341 @@
   }
 }
 html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
-body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;font-size:16px;line-height:1.65}
+body{
+  font-family:'DM Sans',sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  min-height:100vh;
+  font-size:16px;
+  line-height:1.65;
+  overflow-x:hidden;
+}
 
-/* Layout */
-.wrap{max-width:800px;margin:0 auto;padding:2.5rem 1.25rem 4rem}
+/* ─── Animated background grain ──────────────────────── */
+body::before{
+  content:'';
+  position:fixed;
+  inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events:none;
+  z-index:0;
+  opacity:0.5;
+}
 
-/* Offline banner */
-#offline-banner{display:none;background:#BA7517;color:#fff;font-size:13px;text-align:center;padding:8px 16px;position:sticky;top:0;z-index:100}
+/* ─── Subtle floating orbs ────────────────────────────── */
+.orb{
+  position:fixed;
+  border-radius:50%;
+  filter:blur(80px);
+  pointer-events:none;
+  z-index:0;
+  animation:orb-drift 18s ease-in-out infinite alternate;
+}
+.orb-1{
+  width:400px;height:400px;
+  background:radial-gradient(circle,rgba(29,158,117,0.07) 0%,transparent 70%);
+  top:-100px;right:-80px;
+  animation-duration:20s;
+}
+.orb-2{
+  width:300px;height:300px;
+  background:radial-gradient(circle,rgba(24,95,165,0.05) 0%,transparent 70%);
+  bottom:10%;left:-60px;
+  animation-duration:15s;
+  animation-delay:-7s;
+}
+@keyframes orb-drift{
+  0%{transform:translate(0,0) scale(1)}
+  100%{transform:translate(30px,40px) scale(1.08)}
+}
+
+/* ─── Layout ──────────────────────────────────────────── */
+.wrap{max-width:800px;margin:0 auto;padding:2.5rem 1.25rem 4rem;position:relative;z-index:1}
+
+/* ─── Offline banner ──────────────────────────────────── */
+#offline-banner{
+  display:none;background:#BA7517;color:#fff;
+  font-size:13px;text-align:center;padding:8px 16px;
+  position:sticky;top:0;z-index:100;
+}
 body.offline #offline-banner{display:block}
 
-/* Hero */
-.hero{display:grid;grid-template-columns:84px 1fr;gap:1.5rem;align-items:start;margin-bottom:2.5rem;padding-bottom:2.5rem;border-bottom:1px solid var(--border)}
-.avatar{width:84px;height:84px;border-radius:50%;background:linear-gradient(135deg,#1D9E75,#085041);display:flex;align-items:center;justify-content:center;font-size:28px;font-weight:500;color:#fff;flex-shrink:0;letter-spacing:1px}
+/* ─── Page load animations ────────────────────────────── */
+@keyframes fade-up{
+  from{opacity:0;transform:translateY(20px)}
+  to{opacity:1;transform:translateY(0)}
+}
+@keyframes fade-in{
+  from{opacity:0}
+  to{opacity:1}
+}
+@keyframes scale-in{
+  from{opacity:0;transform:scale(0.88)}
+  to{opacity:1;transform:scale(1)}
+}
+@keyframes slide-right{
+  from{opacity:0;transform:translateX(-16px)}
+  to{opacity:1;transform:translateX(0)}
+}
+
+.anim-fade-up{
+  opacity:0;
+  animation:fade-up 0.7s var(--ease-out-expo) forwards;
+}
+.anim-scale-in{
+  opacity:0;
+  animation:scale-in 0.6s var(--ease-out-expo) forwards;
+}
+.anim-fade-in{
+  opacity:0;
+  animation:fade-in 0.6s ease forwards;
+}
+
+/* ─── Hero ────────────────────────────────────────────── */
+.hero{
+  display:grid;
+  grid-template-columns:84px 1fr;
+  gap:1.5rem;
+  align-items:start;
+  margin-bottom:2.5rem;
+  padding-bottom:2.5rem;
+  border-bottom:1px solid var(--border);
+}
+.avatar-wrap{
+  position:relative;
+  width:84px;height:84px;
+  flex-shrink:0;
+}
+.avatar{
+  width:84px;height:84px;
+  border-radius:50%;
+  object-fit:cover;
+  display:block;
+  transition:transform 0.4s var(--ease-out-expo), box-shadow 0.4s ease;
+}
+.avatar:hover{
+  transform:scale(1.06) rotate(-2deg);
+  box-shadow:0 12px 32px rgba(29,158,117,0.25);
+}
+/* Animated ring around avatar */
+.avatar-wrap::after{
+  content:'';
+  position:absolute;
+  inset:-3px;
+  border-radius:50%;
+  border:2px solid var(--accent);
+  opacity:0;
+  transform:scale(0.9);
+  transition:opacity 0.4s ease, transform 0.4s var(--ease-out-expo);
+}
+.avatar-wrap:hover::after{
+  opacity:0.5;
+  transform:scale(1);
+}
+
 .hero-meta{font-size:12px;color:var(--hint);margin-bottom:6px;letter-spacing:0.04em}
-.hero-name{font-family:'DM Serif Display',serif;font-size:24px;font-weight:400;line-height:1.2;margin-bottom:10px}
+.hero-name{
+  font-family:'DM Serif Display',serif;
+  font-size:24px;font-weight:400;line-height:1.2;margin-bottom:10px;
+}
+
+/* Typewriter cursor */
+.typed-cursor{
+  display:inline-block;
+  width:2px;height:1em;
+  background:var(--accent);
+  margin-left:2px;
+  vertical-align:text-bottom;
+  animation:blink 1s step-end infinite;
+}
+@keyframes blink{
+  0%,100%{opacity:1}
+  50%{opacity:0}
+}
+
 .hero-bio{font-size:14px;color:var(--muted);line-height:1.7;max-width:500px}
-.hero-stats{display:flex;flex-wrap:wrap;gap:1rem;margin-top:1rem}
+.hero-stats{display:flex;flex-wrap:wrap;gap:1rem;margin-top:1rem;align-items:center}
 .stat{font-size:13px;color:var(--muted)}
 .stat b{color:var(--text);font-weight:500}
-.stat a{color:var(--accent);text-decoration:none}
-.stat a:hover{text-decoration:underline}
+.stat a{color:var(--accent);text-decoration:none;transition:color 0.15s}
+.stat a:hover{text-decoration:underline;color:var(--accent-dark)}
 
-/* Toolbar */
+/* Animated article count */
+#total-count{
+  display:inline-block;
+  font-variant-numeric:tabular-nums;
+  transition:transform 0.2s ease;
+}
+
+/* ─── Toolbar ─────────────────────────────────────────── */
 .toolbar{display:flex;flex-direction:column;gap:10px;margin-bottom:1.25rem}
 .search-wrap{position:relative}
-.search-input{width:100%;font-family:'DM Sans',sans-serif;font-size:14px;padding:9px 14px 9px 38px;border:1px solid var(--border);border-radius:8px;background:var(--surface);color:var(--text);outline:none;transition:border-color .15s}
+.search-input{
+  width:100%;font-family:'DM Sans',sans-serif;font-size:14px;
+  padding:9px 14px 9px 38px;
+  border:1px solid var(--border);border-radius:8px;
+  background:var(--surface);color:var(--text);outline:none;
+  transition:border-color 0.2s ease, box-shadow 0.2s ease;
+}
 .search-input::placeholder{color:var(--hint)}
-.search-input:focus{border-color:var(--accent)}
+.search-input:focus{
+  border-color:var(--accent);
+  box-shadow:0 0 0 3px rgba(29,158,117,0.12);
+}
 .search-icon{position:absolute;left:12px;top:50%;transform:translateY(-50%);opacity:0.4;pointer-events:none}
 .filters{display:flex;gap:7px;flex-wrap:wrap}
-.filter-btn{font-family:'DM Sans',sans-serif;font-size:12px;padding:5px 14px;border:1px solid var(--border);border-radius:20px;background:transparent;color:var(--muted);cursor:pointer;transition:all .15s;white-space:nowrap}
-.filter-btn:hover{border-color:var(--border-hover);color:var(--text)}
-.filter-btn.active{background:var(--surface);color:var(--text);border-color:var(--border-hover);font-weight:500}
+.filter-btn{
+  font-family:'DM Sans',sans-serif;font-size:12px;
+  padding:5px 14px;border:1px solid var(--border);
+  border-radius:20px;background:transparent;color:var(--muted);
+  cursor:pointer;transition:all 0.2s ease;white-space:nowrap;
+}
+.filter-btn:hover{
+  border-color:var(--border-hover);color:var(--text);
+  transform:translateY(-1px);
+}
+.filter-btn.active{
+  background:var(--surface);color:var(--text);
+  border-color:var(--border-hover);font-weight:500;
+  box-shadow:0 2px 8px rgba(0,0,0,0.08);
+}
 
-/* Section header */
-.section-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem}
-.section-label{font-size:11px;font-weight:500;letter-spacing:0.09em;text-transform:uppercase;color:var(--hint)}
-.count{font-size:13px;color:var(--hint)}
+/* ─── Section header ──────────────────────────────────── */
+.section-header{
+  display:flex;align-items:center;justify-content:space-between;
+  margin-bottom:1rem;
+}
+.section-label{
+  font-size:11px;font-weight:500;letter-spacing:0.09em;
+  text-transform:uppercase;color:var(--hint);
+}
+.count{font-size:13px;color:var(--hint);transition:opacity 0.2s ease}
 
-/* Articles */
+/* ─── Articles ────────────────────────────────────────── */
 .articles{display:flex;flex-direction:column}
-.article{display:grid;grid-template-columns:1fr 80px;gap:1rem;align-items:start;padding:1rem 0;border-bottom:1px solid var(--border);text-decoration:none;color:inherit;transition:opacity .15s}
+
+/* AOS-style scroll reveal for articles */
+.article{
+  display:grid;grid-template-columns:1fr 80px;gap:1rem;align-items:start;
+  padding:1rem 0;border-bottom:1px solid var(--border);
+  text-decoration:none;color:inherit;
+  transition:opacity 0.2s ease, transform 0.25s var(--ease-out-expo);
+  /* scroll reveal defaults */
+  opacity:0;
+  transform:translateY(12px);
+}
 .article:last-child{border-bottom:none}
-.article:hover{opacity:0.65}
-.art-tag{font-size:11px;font-weight:500;letter-spacing:0.06em;text-transform:uppercase;color:var(--hint);margin-bottom:5px;display:flex;align-items:center;gap:6px}
-.tag-dot{display:inline-block;width:6px;height:6px;border-radius:50%;flex-shrink:0}
-.art-title{font-size:15px;font-weight:500;line-height:1.45;color:var(--text)}
+.article.visible{
+  opacity:1;
+  transform:translateY(0);
+}
+.article:hover{
+  opacity:0.7;
+  transform:translateY(-2px);
+}
+.art-tag{
+  font-size:11px;font-weight:500;letter-spacing:0.06em;
+  text-transform:uppercase;color:var(--hint);
+  margin-bottom:5px;display:flex;align-items:center;gap:6px;
+}
+.tag-dot{
+  display:inline-block;width:6px;height:6px;
+  border-radius:50%;flex-shrink:0;
+  transition:transform 0.2s ease;
+}
+.article:hover .tag-dot{transform:scale(1.5)}
+.art-title{
+  font-size:15px;font-weight:500;line-height:1.45;color:var(--text);
+  transition:color 0.15s ease;
+}
+.article:hover .art-title{color:var(--accent)}
 .art-date{font-size:12px;color:var(--hint);text-align:right;padding-top:2px}
 .empty{text-align:center;padding:3rem;color:var(--muted);font-size:14px}
 
-/* Footer */
-.footer{margin-top:3rem;padding-top:1.75rem;border-top:1px solid var(--border);font-size:12px;color:var(--hint);line-height:1.7}
+/* ─── Footer ──────────────────────────────────────────── */
+.footer{
+  margin-top:3rem;padding-top:1.75rem;
+  border-top:1px solid var(--border);
+  font-size:12px;color:var(--hint);line-height:1.7;
+}
 .footer a{color:var(--accent);text-decoration:none}
 .footer a:hover{text-decoration:underline}
 .footer-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-top:1rem}
-.footer-block b{display:block;margin-bottom:4px;color:var(--muted);font-weight:500;font-size:11px;text-transform:uppercase;letter-spacing:0.07em}
+.footer-block b{
+  display:block;margin-bottom:4px;color:var(--muted);
+  font-weight:500;font-size:11px;text-transform:uppercase;letter-spacing:0.07em;
+}
 
-/* Install PWA button */
-#install-btn{display:none;font-family:'DM Sans',sans-serif;font-size:13px;padding:8px 18px;border:1px solid var(--accent);border-radius:20px;background:transparent;color:var(--accent);cursor:pointer;transition:all .15s}
-#install-btn:hover{background:var(--accent);color:#fff}
+/* ─── Install PWA button ──────────────────────────────── */
+#install-btn{
+  display:none;font-family:'DM Sans',sans-serif;font-size:13px;
+  padding:8px 18px;border:1px solid var(--accent);
+  border-radius:20px;background:transparent;color:var(--accent);
+  cursor:pointer;transition:all 0.2s ease;
+}
+#install-btn:hover{
+  background:var(--accent);color:#fff;
+  transform:translateY(-1px);box-shadow:0 4px 14px rgba(29,158,117,0.3);
+}
 
-/* Mobile */
+/* ─── Scroll progress bar ─────────────────────────────── */
+#progress-bar{
+  position:fixed;top:0;left:0;height:2px;width:0%;
+  background:linear-gradient(90deg,var(--accent),#5DCAA5);
+  z-index:999;transition:width 0.1s linear;
+}
+
+/* ─── Mobile ──────────────────────────────────────────── */
 @media(max-width:560px){
   .hero{grid-template-columns:1fr}
-  .avatar{width:68px;height:68px;font-size:22px}
+  .avatar,.avatar-wrap{width:68px;height:68px}
   .hero-name{font-size:20px}
   .article{grid-template-columns:1fr}
   .art-date{display:none}
   .footer-grid{grid-template-columns:1fr}
 }
+
+/* ─── Reduced motion ──────────────────────────────────── */
+@media(prefers-reduced-motion:reduce){
+  .anim-fade-up,.anim-scale-in,.anim-fade-in,.article{
+    animation:none!important;
+    opacity:1!important;
+    transform:none!important;
+  }
+  .orb{animation:none}
+  .avatar:hover{transform:none}
+  .filter-btn:hover{transform:none}
+  #install-btn:hover{transform:none}
+}
 </style>
 </head>
 <body>
+
+<!-- Scroll progress bar -->
+<div id="progress-bar"></div>
+
+<!-- Offline banner -->
 <div id="offline-banner">⚠ You're offline — showing cached portfolio</div>
 
+<!-- Ambient orbs -->
+<div class="orb orb-1"></div>
+<div class="orb orb-2"></div>
+
 <div class="wrap">
+
+  <!-- Hero -->
   <header class="hero">
-    <img class="avatar" src="Barong, Kimona and Formal (355).jpg" alt="Razel Jade Hijastro" style="object-fit:cover;">
+    <div class="avatar-wrap anim-scale-in" style="animation-delay:0.05s">
+      <img class="avatar" src="Barong, Kimona and Formal (355).jpg" alt="Razel Jade Hijastro">
+    </div>
     <div>
-      <div class="hero-meta">Crypto Writer · Web3 Analyst · Philippines</div>
-      <h1 class="hero-name">Razel Jade Hijastro</h1>
-      <p class="hero-bio">Writing about Web3 without cheerleading for it — the hype, the blowups, and the occasional thing that actually works. DYOR is still the rule. I just try to make the research less painful.</p>
-      <div class="hero-stats">
-        <div class="stat"><b id="total-count">71</b> published articles</div>
+      <div class="hero-meta anim-fade-up" style="animation-delay:0.1s">Crypto Writer · Web3 Analyst · Philippines</div>
+      <h1 class="hero-name anim-fade-up" style="animation-delay:0.18s">
+        <span id="typed-name"></span><span class="typed-cursor"></span>
+      </h1>
+      <p class="hero-bio anim-fade-up" style="animation-delay:0.28s">Writing about Web3 without cheerleading for it — the hype, the blowups, and the occasional thing that actually works. DYOR is still the rule. I just try to make the research less painful.</p>
+      <div class="hero-stats anim-fade-up" style="animation-delay:0.38s">
+        <div class="stat"><b id="total-count">0</b> published articles</div>
         <div class="stat"><b>2025–2026</b></div>
         <div class="stat"><b><a href="https://www.lbank.com/creator/profile/675b7fb016824d0b8f45310ae3a4dc35" target="_blank" rel="noopener">LBank Creator ↗</a></b></div>
         <button id="install-btn">📥 Add to Home Screen</button>
@@ -115,7 +370,8 @@ body.offline #offline-banner{display:block}
   </header>
 
   <main>
-    <div class="toolbar">
+    <!-- Toolbar -->
+    <div class="toolbar anim-fade-up" style="animation-delay:0.45s">
       <div class="search-wrap">
         <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
         <input class="search-input" type="search" id="search" placeholder="Search articles…" autocomplete="off">
@@ -123,7 +379,7 @@ body.offline #offline-banner{display:block}
       <div class="filters" id="filter-bar"></div>
     </div>
 
-    <div class="section-header">
+    <div class="section-header anim-fade-in" style="animation-delay:0.5s">
       <span class="section-label">Portfolio</span>
       <span class="count" id="count-label">72 articles</span>
     </div>
@@ -131,7 +387,7 @@ body.offline #offline-banner{display:block}
     <div class="articles" id="articles-list"></div>
   </main>
 
-  <footer class="footer">
+  <footer class="footer anim-fade-up" style="animation-delay:0.2s">
     <p>Originally published on <a href="https://www.lbank.com/creator/profile/675b7fb016824d0b8f45310ae3a4dc35" target="_blank" rel="noopener">LBank Creator</a>. This is a personal portfolio backup — all articles link to their original published versions.</p>
     <div class="footer-grid">
       <div class="footer-block">
@@ -147,6 +403,7 @@ body.offline #offline-banner{display:block}
 </div>
 
 <script>
+/* ─── Data ─────────────────────────────────────────────── */
 const articles = [
   // May 2026
   {title:"RISCOIN's Philippine Recruitment Drive: A Growing Concern That Regulators Are Now Taking Seriously",tag:"Regulation",date:"2026-05-07",url:"https://www.lbank.com/creator/riscoin-philippine-recruitment-drive-regulators-concern"},
@@ -173,7 +430,7 @@ const articles = [
   {title:"MicroStrategy Didn't Blink — It Repositioned",tag:"Bitcoin",date:"2026-04-28",url:"https://www.lbank.com/creator/microstrategy-didnt-blink-repositioned"},
   {title:"Trump's Iran Deadline: How Chaos Breaks Markets and Crypto Rises Anyway",tag:"Industry",date:"2026-04-27",url:"https://www.lbank.com/creator/trump-iran-deadline-chaos-breaks-markets-crypto-rises-anyway"},
   {title:"Kiyosaki Says Buy Bitcoin and Gold — His 74% Shift Explains Why",tag:"Bitcoin",date:"2026-04-26",url:"https://www.lbank.com/creator/kiyosaki-buy-bitcoin-and-gold-74-shift"},
-  {title:"Ark Invest Sees One-Third of Bitcoin Supply at Risk From Quantum Threat",tag:"Bitcoin",date:"2026-04-25",url:"https://www.lbank.com/creator/-j91qefex"},
+  {title:"Ark Invest Sees One-Third of Bitcoin Supply at Risk From Quantum Threat",tag:"Bitcoin",date:"2026-04-25",url:"https://www.lbank.com/creator/ark-invest-bitcoin-quantum-threat"},
   {title:"DAOs Are Not Doomed — They Just Need to Evolve, Says Aave Founder",tag:"DeFi",date:"2026-04-25",url:"https://www.lbank.com/creator/daos-not-doomed-evolve-aave-founder"},
   {title:"Bitcoin ETFs Gain $251M as Goldman Sachs Leads a New Wave of XRP ETF Holders",tag:"Bitcoin",date:"2026-04-24",url:"https://www.lbank.com/creator/bitcoin-etfs-gain-251m-goldman-sachs-leads-xrp-etf-holders"},
   {title:"US Seeks Forfeiture of $34M USDT Tied to Crypto Investment Scam",tag:"Security",date:"2026-04-23",url:"https://www.lbank.com/creator/us-seeks-forfeiture-34m-usdt-tied-crypto-investment-scam"},
@@ -225,6 +482,7 @@ const articles = [
   {title:"Singapore's Cross-Border Payments Upgrade — and Why It Matters for Crypto",tag:"Industry",date:"2026-01-20",url:"https://www.lbank.com/creator/singapore-cross-border-payments-why-it-matters"},
 ];
 
+/* ─── Tag colors ────────────────────────────────────────── */
 const tagColors={
   "Bitcoin":"#E5860A","Ethereum":"#5865F2","Regulation":"#D4537E","Security":"#E24B4A",
   "Industry":"#1D9E75","Stablecoins":"#0F6E56","DeFi":"#7F77DD","Tokenization":"#185FA5","NFT":"#D85A30"
@@ -232,13 +490,50 @@ const tagColors={
 const tags=[...new Set(articles.map(a=>a.tag))].sort();
 let activeTag="All",query="";
 
+/* ─── Scroll progress bar ───────────────────────────────── */
+const progressBar=document.getElementById('progress-bar');
+window.addEventListener('scroll',()=>{
+  const scrolled=window.scrollY;
+  const total=document.documentElement.scrollHeight-window.innerHeight;
+  progressBar.style.width=(total>0?(scrolled/total*100):0)+'%';
+},{passive:true});
+
+/* ─── Typewriter effect ─────────────────────────────────── */
+function typeWriter(el,text,speed,onDone){
+  let i=0;
+  el.textContent='';
+  function tick(){
+    if(i<text.length){
+      el.textContent+=text[i++];
+      setTimeout(tick,speed);
+    } else if(onDone) onDone();
+  }
+  tick();
+}
+
+/* ─── Count-up animation ────────────────────────────────── */
+function countUp(el,target,duration){
+  const start=performance.now();
+  function tick(now){
+    const elapsed=now-start;
+    const progress=Math.min(elapsed/duration,1);
+    // ease out quad
+    const eased=1-(1-progress)*(1-progress);
+    el.textContent=Math.floor(eased*target);
+    if(progress<1) requestAnimationFrame(tick);
+    else el.textContent=target;
+  }
+  requestAnimationFrame(tick);
+}
+
+/* ─── Filters ───────────────────────────────────────────── */
 function buildFilters(){
   const bar=document.getElementById('filter-bar');
   const mk=(label,tag)=>{
     const b=document.createElement('button');
     b.className='filter-btn'+(tag==='All'?' active':'');
     b.textContent=label;
-    b.onclick=()=>setFilter(tag);
+    b.onclick=()=>setFilter(tag,b);
     bar.appendChild(b);
   };
   mk('All','All');
@@ -248,16 +543,30 @@ function buildFilters(){
   });
 }
 
-function setFilter(tag){
+function setFilter(tag,clickedBtn){
   activeTag=tag;
-  document.querySelectorAll('.filter-btn').forEach(b=>{
-    const isAll=b.textContent==='All'||b.textContent.startsWith('All');
-    const matches=(tag==='All'&&isAll)||(b.textContent.startsWith(tag));
-    b.classList.toggle('active',matches);
-  });
+  document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+  if(clickedBtn) clickedBtn.classList.add('active');
   render();
 }
 
+/* ─── Scroll reveal via IntersectionObserver ────────────── */
+let observer;
+function setupObserver(){
+  observer=new IntersectionObserver((entries)=>{
+    entries.forEach((entry,i)=>{
+      if(entry.isIntersecting){
+        // stagger by index in list
+        const el=entry.target;
+        const delay=parseInt(el.dataset.delay||0);
+        setTimeout(()=>el.classList.add('visible'),delay);
+        observer.unobserve(el);
+      }
+    });
+  },{threshold:0.05,rootMargin:'0px 0px -40px 0px'});
+}
+
+/* ─── Render articles ───────────────────────────────────── */
 function render(){
   const q=query.toLowerCase().trim();
   const filtered=articles.filter(a=>{
@@ -265,30 +574,62 @@ function render(){
     const searchOk=!q||a.title.toLowerCase().includes(q)||a.tag.toLowerCase().includes(q)||a.date.includes(q);
     return tagOk&&searchOk;
   });
-  document.getElementById('count-label').textContent=`${filtered.length} article${filtered.length!==1?'s':''}`;
+
+  const countLabel=document.getElementById('count-label');
+  countLabel.style.opacity='0';
+  setTimeout(()=>{
+    countLabel.textContent=`${filtered.length} article${filtered.length!==1?'s':''}`;
+    countLabel.style.opacity='1';
+  },150);
+
   const list=document.getElementById('articles-list');
   list.innerHTML='';
+
   if(!filtered.length){
     list.innerHTML='<div class="empty">No articles match — try a different search or filter.</div>';
     return;
   }
-  filtered.forEach(a=>{
+
+  filtered.forEach((a,i)=>{
     const el=document.createElement('a');
     el.className='article';
     el.href=a.url;
     el.target='_blank';
     el.rel='noopener noreferrer';
+    el.dataset.delay=Math.min(i*30,300); // stagger up to 300ms
     const color=tagColors[a.tag]||'#888780';
     el.innerHTML=`<div><div class="art-tag"><span class="tag-dot" style="background:${color}"></span>${a.tag}</div><div class="art-title">${a.title}</div></div><div class="art-date">${a.date}</div>`;
     list.appendChild(el);
+    if(observer) observer.observe(el);
   });
 }
 
-document.getElementById('search').addEventListener('input',e=>{query=e.target.value;render();});
+/* ─── Search ────────────────────────────────────────────── */
+document.getElementById('search').addEventListener('input',e=>{
+  query=e.target.value;
+  render();
+});
+
+/* ─── Init ──────────────────────────────────────────────── */
+setupObserver();
 buildFilters();
 render();
 
-// PWA install
+// Typewriter on name — starts after hero fades in
+setTimeout(()=>{
+  typeWriter(
+    document.getElementById('typed-name'),
+    'Razel Jade Hijastro',
+    55
+  );
+},300);
+
+// Count-up on article number
+setTimeout(()=>{
+  countUp(document.getElementById('total-count'),72,1200);
+},500);
+
+/* ─── PWA install ───────────────────────────────────────── */
 let deferredPrompt;
 window.addEventListener('beforeinstallprompt',e=>{
   e.preventDefault();deferredPrompt=e;
@@ -302,13 +643,13 @@ document.getElementById('install-btn').onclick=async()=>{
   deferredPrompt=null;
 };
 
-// Offline detection
+/* ─── Online/offline detection ──────────────────────────── */
 function checkOnline(){document.body.classList.toggle('offline',!navigator.onLine);}
 window.addEventListener('online',checkOnline);
 window.addEventListener('offline',checkOnline);
 checkOnline();
 
-// Service Worker registration
+/* ─── Service Worker ────────────────────────────────────── */
 if('serviceWorker' in navigator){
   navigator.serviceWorker.register('sw.js').catch(()=>{});
 }
