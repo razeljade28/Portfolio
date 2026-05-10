@@ -288,6 +288,289 @@ body.offline #offline-banner{display:block}
 .local-badge svg{flex-shrink:0}
 .empty{text-align:center;padding:3rem;color:var(--muted);font-size:14px}
 
+/* ─── Hero action buttons ─────────────────────────────── */
+.hero-actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.action-btn{
+  display:inline-flex;align-items:center;gap:7px;
+  font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;
+  padding:8px 18px;
+  border:1px solid var(--border-hover);
+  border-radius:20px;
+  background:var(--surface);
+  color:var(--text);
+  cursor:pointer;
+  transition:all 0.22s var(--ease-out-expo);
+}
+.action-btn:hover{
+  border-color:var(--accent);color:var(--accent);
+  background:var(--accent-light);
+  transform:translateY(-2px);
+  box-shadow:0 4px 14px rgba(29,158,117,0.15);
+}
+.action-btn svg{opacity:0.7}
+
+/* ─── See more button ─────────────────────────────────── */
+.see-more-btn{
+  display:inline-flex;align-items:center;
+  font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;
+  padding:9px 24px;
+  border:1px solid var(--border-hover);
+  border-radius:20px;background:var(--surface);color:var(--muted);
+  cursor:pointer;
+  transition:all 0.22s var(--ease-out-expo);
+}
+.see-more-btn:hover{
+  border-color:var(--accent);color:var(--accent);
+  background:var(--accent-light);
+  transform:translateY(-1px);
+  box-shadow:0 4px 14px rgba(29,158,117,0.12);
+}
+
+/* ─── About section (no top border — sits right after hero) ── */
+.about-section{margin-top:1.75rem;padding-top:0}
+.about-intro{
+  font-size:14.5px;color:var(--muted);line-height:1.85;
+  max-width:660px;margin-bottom:1.25rem;
+}
+.about-intro strong{color:var(--text)}
+
+/* ─── Modal overlay ───────────────────────────────────── */
+.modal-overlay{
+  position:fixed;inset:0;z-index:500;
+  background:rgba(0,0,0,0.55);
+  backdrop-filter:blur(4px);
+  -webkit-backdrop-filter:blur(4px);
+  display:flex;align-items:center;justify-content:center;
+  padding:1rem;
+  opacity:0;pointer-events:none;
+  transition:opacity 0.25s ease;
+}
+.modal-overlay.open{opacity:1;pointer-events:all}
+.modal-box{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:16px;
+  width:100%;max-width:640px;
+  max-height:88vh;
+  display:flex;flex-direction:column;
+  overflow:hidden;
+  transform:scale(0.94) translateY(12px);
+  transition:transform 0.3s var(--ease-out-expo);
+  box-shadow:0 24px 64px rgba(0,0,0,0.22);
+}
+.modal-overlay.open .modal-box{transform:scale(1) translateY(0)}
+.modal-header{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:1.1rem 1.5rem;
+  border-bottom:1px solid var(--border);
+  flex-shrink:0;
+}
+.modal-title{font-size:14px;font-weight:600;letter-spacing:0.01em;color:var(--text)}
+.modal-close{
+  display:flex;align-items:center;justify-content:center;
+  width:32px;height:32px;border-radius:8px;
+  background:transparent;border:none;cursor:pointer;
+  color:var(--muted);
+  transition:background 0.15s ease, color 0.15s ease;
+}
+.modal-close:hover{background:var(--accent-light);color:var(--accent)}
+.modal-body{overflow-y:auto;padding:0;flex:1}
+.modal-timeline{padding:1.5rem 1.5rem 1.5rem 2.5rem}
+
+/* ─── Recommendation letter modal ────────────────────── */
+.rec-tabs{
+  display:flex;gap:0;
+  border-bottom:1px solid var(--border);
+  flex-shrink:0;
+}
+.rec-tab{
+  font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;
+  padding:12px 20px;
+  background:transparent;border:none;
+  color:var(--muted);cursor:pointer;
+  border-bottom:2px solid transparent;
+  margin-bottom:-1px;
+  transition:color 0.15s ease, border-color 0.15s ease;
+}
+.rec-tab:hover{color:var(--text)}
+.rec-tab.active{color:var(--accent);border-bottom-color:var(--accent)}
+.rec-letter{display:none;padding:1.5rem}
+.rec-letter.active{display:block}
+.rec-letter-head{
+  display:flex;align-items:center;gap:14px;
+  margin-bottom:1.5rem;
+  padding-bottom:1.25rem;
+  border-bottom:1px solid var(--border);
+}
+.rec-avatar{
+  width:44px;height:44px;border-radius:50%;
+  background:linear-gradient(135deg,var(--accent),var(--accent-dark));
+  color:#fff;font-size:14px;font-weight:600;
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;letter-spacing:0.02em;
+}
+.rec-name{font-size:15px;font-weight:600;color:var(--text);margin-bottom:2px}
+.rec-role{font-size:12.5px;color:var(--muted);margin-bottom:2px}
+.rec-contact{font-size:11.5px;color:var(--hint)}
+.rec-body p{
+  font-size:13.5px;color:var(--muted);line-height:1.8;
+  margin-bottom:1rem;
+}
+.rec-body p:last-child{margin-bottom:0}
+.rec-body strong{color:var(--text)}
+.rec-body a{color:var(--accent);text-decoration:none}
+.rec-body a:hover{text-decoration:underline}
+.rec-sign{
+  margin-top:1.5rem!important;
+  padding-top:1.25rem;
+  border-top:1px solid var(--border);
+  font-size:13px!important;
+  line-height:1.6!important;
+}
+
+/* ─── Topics section border ───────────────────────────── */
+.topics-section{
+  margin-top:2.5rem;padding-top:2rem;
+  border-top:1px solid var(--border);
+}
+
+.about-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:1.5rem;
+  margin-top:1.25rem;
+}
+.about-card{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:12px;
+  padding:1.25rem 1.5rem;
+  transition:border-color 0.2s ease, box-shadow 0.2s ease, transform 0.3s var(--ease-out-expo);
+}
+.about-card:hover{
+  border-color:rgba(29,158,117,0.3);
+  box-shadow:0 6px 24px rgba(29,158,117,0.07);
+  transform:translateY(-2px);
+}
+.about-card-icon{
+  font-size:20px;margin-bottom:10px;
+  display:inline-block;
+  animation:float 3s ease-in-out infinite;
+}
+@keyframes float{
+  0%,100%{transform:translateY(0)}
+  50%{transform:translateY(-4px)}
+}
+.about-card:nth-child(2) .about-card-icon{animation-delay:0.4s}
+.about-card:nth-child(3) .about-card-icon{animation-delay:0.8s}
+.about-card:nth-child(4) .about-card-icon{animation-delay:1.2s}
+.about-card-title{font-size:12px;font-weight:500;letter-spacing:0.07em;text-transform:uppercase;color:var(--accent);margin-bottom:6px}
+.about-card-text{font-size:13px;color:var(--muted);line-height:1.7}
+.about-intro{
+  font-size:15px;color:var(--muted);line-height:1.8;
+  max-width:680px;
+  margin-top:1rem;
+}
+.about-intro strong{color:var(--text)}
+@media(max-width:560px){.about-grid{grid-template-columns:1fr}}
+
+/* ─── Topics / What I cover ──────────────────────────── */
+.topics-section{
+  margin-top:3rem;padding-top:2.5rem;
+  border-top:1px solid var(--border);
+}
+.topics-list{
+  display:flex;flex-wrap:wrap;gap:10px;
+  margin-top:1.25rem;
+}
+.topic-pill{
+  display:flex;align-items:center;gap:7px;
+  font-size:13px;font-weight:500;
+  padding:7px 16px;
+  border-radius:30px;
+  border:1px solid transparent;
+  cursor:default;
+  transition:transform 0.25s var(--ease-out-expo), box-shadow 0.25s ease;
+  opacity:0;
+  transform:scale(0.85) translateY(10px);
+}
+.topic-pill.visible{
+  opacity:1;transform:scale(1) translateY(0);
+}
+.topic-pill:hover{
+  transform:scale(1.04) translateY(-2px);
+  box-shadow:0 6px 18px rgba(0,0,0,0.1);
+}
+.topic-pill-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+
+/* ─── Experience timeline ─────────────────────────────── */
+.timeline-section{
+  margin-top:3rem;padding-top:2.5rem;
+  border-top:1px solid var(--border);
+}
+.timeline{
+  position:relative;
+  margin-top:1.5rem;
+  padding-left:28px;
+}
+.timeline::before{
+  content:'';
+  position:absolute;
+  left:6px;top:0;bottom:0;
+  width:2px;
+  background:linear-gradient(to bottom, var(--accent), transparent);
+  border-radius:2px;
+}
+.tl-item{
+  position:relative;
+  margin-bottom:2rem;
+  opacity:0;
+  transform:translateX(-12px);
+  transition:opacity 0.5s ease, transform 0.5s var(--ease-out-expo);
+}
+.tl-item.visible{opacity:1;transform:translateX(0)}
+.tl-item:last-child{margin-bottom:0}
+.tl-dot{
+  position:absolute;
+  left:-25px;top:4px;
+  width:12px;height:12px;
+  border-radius:50%;
+  background:var(--accent);
+  border:2px solid var(--bg);
+  box-shadow:0 0 0 2px var(--accent);
+  transition:transform 0.2s ease, box-shadow 0.2s ease;
+}
+.tl-item:hover .tl-dot{
+  transform:scale(1.3);
+  box-shadow:0 0 0 4px rgba(29,158,117,0.2);
+}
+.tl-header{display:flex;justify-content:space-between;align-items:baseline;gap:8px;margin-bottom:2px}
+.tl-role{font-size:14px;font-weight:500;color:var(--text)}
+.tl-date{font-size:11.5px;color:var(--hint);white-space:nowrap;flex-shrink:0}
+.tl-company{
+  font-size:12.5px;color:var(--accent);margin-bottom:5px;
+  display:flex;align-items:center;gap:6px;
+}
+.tl-company-badge{
+  font-size:10px;font-weight:500;letter-spacing:0.05em;text-transform:uppercase;
+  padding:2px 8px;border-radius:10px;
+}
+.tl-desc{font-size:13px;color:var(--muted);line-height:1.65}
+@media(max-width:560px){.tl-header{flex-direction:column;gap:2px}}
+
+/* ─── Section description ────────────────────────────── */
+.section-desc{font-size:13px;color:var(--muted);margin-top:4px;line-height:1.6}
+
+/* ─── Glowing accent line under section labels ─────── */
+.section-label-wrap{display:flex;flex-direction:column;gap:4px}
+.section-label-line{
+  display:block;
+  width:24px;height:2px;
+  background:var(--accent);
+  border-radius:2px;
+  margin-top:2px;
+}
+
 /* ─── Resume section ─────────────────────────────────── */
 .resume-section{
   margin-top:3.5rem;padding-top:2.5rem;
@@ -459,6 +742,210 @@ body.offline #offline-banner{display:block}
 <div class="orb orb-1"></div>
 <div class="orb orb-2"></div>
 
+<!-- ── Recommendation Letters Modal ──────────────────────────── -->
+<div class="modal-overlay" id="rec-modal" role="dialog" aria-modal="true" aria-label="Recommendation Letters">
+  <div class="modal-box" style="max-width:680px">
+    <div class="modal-header">
+      <span class="modal-title">Recommendation Letters</span>
+      <div style="display:flex;align-items:center;gap:10px">
+        <a class="resume-dl-btn" href="1778404668732_Recommendation_Letter.pdf" download="Recommendation_Letters.pdf">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="margin-right:5px;vertical-align:middle"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>Download PDF
+        </a>
+        <button class="modal-close" onclick="closeModal('rec-modal')" aria-label="Close">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+    </div>
+    <div class="modal-body">
+
+      <!-- Tab switcher -->
+      <div class="rec-tabs">
+        <button class="rec-tab active" onclick="switchRecTab(0, this)">Alex Wong · MEXC</button>
+        <button class="rec-tab" onclick="switchRecTab(1, this)">Amber Peng · MEXC</button>
+      </div>
+
+      <!-- Letter 1: Alex Wong -->
+      <div class="rec-letter active" id="rec-0">
+        <div class="rec-letter-head">
+          <div class="rec-avatar">AW</div>
+          <div>
+            <div class="rec-name">Alex Wong</div>
+            <div class="rec-role">Manager · MEXC Global Community Marketing Team</div>
+            <div class="rec-contact">alexwongduhou@mexc.com</div>
+          </div>
+        </div>
+        <div class="rec-body">
+          <p>To whom it may concern,</p>
+          <p>I am writing this letter to express how proudly I am to recommend <strong>Razel Jade Hijastro</strong>. I have had the pleasure to work with him, and have been consistently impressed with his diligence, commitment, efficiency, organization skill, and the ability to get things done.</p>
+          <p>He has worked for me in a community marketing role. In this role, he has shown great understanding on how to market a product/service by community. For example, he was able to create marketing results and exposure for the company by creating knowledgeable, interesting and interactive content in English.</p>
+          <p>According to his team mates, he is keen towards learning, he accepts and handles feedbacks from his supervisor very well, and most importantly, he has shown good trading analysis skills.</p>
+          <p>All in all, I strongly believe that a candidate like Razel would be an excellent addition to your company.</p>
+          <p>Feel free to reach out to me at <a href="mailto:alexwongduhou@mexc.com">alexwongduhou@mexc.com</a> if you have any inquiries.</p>
+          <p class="rec-sign">Sincerely,<br><strong>Alex Wong</strong><br>Manager, MEXC Global</p>
+        </div>
+      </div>
+
+      <!-- Letter 2: Amber Peng -->
+      <div class="rec-letter" id="rec-1">
+        <div class="rec-letter-head">
+          <div class="rec-avatar" style="background:linear-gradient(135deg,#185FA5,#5865F2)">AP</div>
+          <div>
+            <div class="rec-name">Amber Peng</div>
+            <div class="rec-role">Content Manager · MEXC Global</div>
+            <div class="rec-contact">amber.peng@mexc.com · 05/16/2023</div>
+          </div>
+        </div>
+        <div class="rec-body">
+          <p>To whom it may concern,</p>
+          <p>I am writing to recommend <strong>Razel Jade Hijastro</strong> for the position at your company. I have had the pleasure of working with Razel Jade for the past months at <strong>MEXC Global</strong>, and I have been consistently impressed with their work ethic, attention to detail, and writing skills.</p>
+          <p>Razel Jade is a highly skilled and experienced writer. He has a deep understanding of cryptocurrency and blockchain technology, and he can clearly and concisely explain complex concepts to MEXC's readers. He is also a great communicator. I have been communicating with Razel via email, and it is always a pleasant experience working with him thanks to his professionalism and his enthusiasm to get better continuously in his field.</p>
+          <p>In addition to his writing skills, Razel Jade is also a hard worker and a dedicated employee. They are always willing to go the extra mile, and they are always eager to learn new things. I have no doubt that Razel Jade would be a great asset to your team.</p>
+          <p>I highly recommend Razel Jade for the position. I am confident that he would be a valuable member of your company. Feel free to contact me via my work email: <a href="mailto:amber.peng@mexc.com">amber.peng@mexc.com</a> if you have any questions.</p>
+          <p class="rec-sign">Sincerely,<br><strong>Amber Peng</strong><br>Content Manager, MEXC Global</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ── Experience Modal ─────────────────────────────────────── -->
+<div class="modal-overlay" id="exp-modal" role="dialog" aria-modal="true" aria-label="Experience">
+  <div class="modal-box">
+    <div class="modal-header">
+      <span class="modal-title">Experience</span>
+      <button class="modal-close" onclick="closeModal('exp-modal')" aria-label="Close">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="timeline modal-timeline">
+        <div class="tl-item visible">
+          <div class="tl-dot"></div>
+          <div class="tl-header"><span class="tl-role">External Content Writer</span><span class="tl-date">Jul 2025 – Present</span></div>
+          <div class="tl-company">LBank Exchange <span class="tl-company-badge" style="background:rgba(29,158,117,0.12);color:var(--accent)">Current</span></div>
+          <div class="tl-desc">Producing analytical long-form pieces on institutional Bitcoin adoption, ETF flows, regulatory developments, and DeFi mechanics. Strict sourcing — government data, financial institution reports, primary research only.</div>
+          <ul class="exp-bullets" style="margin-top:8px">
+            <li>Analytical articles on institutional Bitcoin adoption, ETF flows, regulatory developments, and DeFi protocol mechanics.</li>
+            <li>SEO-optimised editorial standards with strict sourcing requirements — government data, financial institutions, primary research.</li>
+            <li>Covers stablecoin legislation, CBDC surveillance implications, and tokenised securities frameworks.</li>
+          </ul>
+        </div>
+        <div class="tl-item visible">
+          <div class="tl-dot"></div>
+          <div class="tl-header"><span class="tl-role">Assistant Manager, TikTok Team</span><span class="tl-date">Jul 2023 – Nov 2024</span></div>
+          <div class="tl-company">Bitget</div>
+          <div class="tl-desc">Supervised creator partnerships across Southeast Asia to grow Bitget's TikTok presence.</div>
+          <ul class="exp-bullets" style="margin-top:8px">
+            <li>Supervised creator partnerships to expand brand reach on TikTok across Southeast Asia.</li>
+            <li>Developed campaigns balancing educational crypto content with platform algorithm optimisation.</li>
+            <li>Managed creator onboarding pipelines, performance evaluation frameworks, and content guideline enforcement.</li>
+          </ul>
+        </div>
+        <div class="tl-item visible">
+          <div class="tl-dot"></div>
+          <div class="tl-header"><span class="tl-role">Content Writer</span><span class="tl-date">Feb 2023 – Jul 2023</span></div>
+          <div class="tl-company">MEXC Global</div>
+          <ul class="exp-bullets" style="margin-top:8px">
+            <li>Authored market analysis articles covering token launches, regulatory updates, and on-chain activity.</li>
+            <li>Recognised as top performer for consistent output quality and engagement metrics across six months.</li>
+          </ul>
+        </div>
+        <div class="tl-item visible">
+          <div class="tl-dot" style="background:var(--hint);box-shadow:0 0 0 2px var(--hint)"></div>
+          <div class="tl-header"><span class="tl-role">Senior Team Manager</span><span class="tl-date">Oct 2022 – May 2023</span></div>
+          <div class="tl-company">MEXC Global</div>
+          <ul class="exp-bullets" style="margin-top:8px">
+            <li>Led cross-platform social media team managing brand presence on Twitter, Telegram, Discord, and regional community channels.</li>
+            <li>Implemented content strategies that drove measurable follower growth during elevated crypto market volatility.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── Resume Modal ─────────────────────────────────────────── -->
+<div class="modal-overlay" id="resume-modal" role="dialog" aria-modal="true" aria-label="Resume">
+  <div class="modal-box">
+    <div class="modal-header">
+      <span class="modal-title">Resume</span>
+      <div style="display:flex;align-items:center;gap:10px">
+        <a class="resume-dl-btn" href="Razel-Jade-Hijastro-Resume.pdf" download>
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="margin-right:5px;vertical-align:middle"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>Download PDF
+        </a>
+        <button class="modal-close" onclick="closeModal('resume-modal')" aria-label="Close">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+    </div>
+    <div class="modal-body">
+      <div class="resume-card" style="border:none;border-radius:0">
+        <div class="resume-block">
+          <div class="resume-block-label">Professional Summary</div>
+          <p class="resume-summary">Crypto and Web3 content specialist with 3+ years of experience producing institutional-grade analysis across leading exchanges. Track record covering Bitcoin adoption, DeFi mechanics, regulatory developments, and market structure for global audiences. Combines editorial rigour with community strategy — having led cross-platform teams at Bitget and MEXC during high-volatility market cycles.</p>
+        </div>
+        <div class="resume-block">
+          <div class="resume-block-label">Professional Experience</div>
+          <div class="exp-item">
+            <div class="exp-header"><span class="exp-role">External Content Writer</span><span class="exp-date">Jul 2025 – Present</span></div>
+            <div class="exp-company">LBank Exchange</div>
+            <ul class="exp-bullets">
+              <li>Analytical articles on institutional Bitcoin adoption, ETF flows, regulatory developments, and DeFi protocol mechanics for LBank's global publication platform.</li>
+              <li>SEO-optimised editorial standards with strict sourcing requirements — government data, financial institution reports, and primary research.</li>
+              <li>Covers stablecoin legislation, CBDC surveillance implications, and tokenised securities frameworks.</li>
+            </ul>
+          </div>
+          <div class="exp-item">
+            <div class="exp-header"><span class="exp-role">Assistant Manager, TikTok Team</span><span class="exp-date">Jul 2023 – Nov 2024</span></div>
+            <div class="exp-company">Bitget</div>
+            <ul class="exp-bullets">
+              <li>Supervised creator partnerships to expand Bitget's brand reach on TikTok across Southeast Asia.</li>
+              <li>Developed campaigns balancing educational crypto content with platform algorithm optimisation, improving organic reach and follower retention.</li>
+              <li>Managed creator onboarding pipelines, performance evaluation frameworks, and content guideline enforcement.</li>
+            </ul>
+          </div>
+          <div class="exp-item">
+            <div class="exp-header"><span class="exp-role">Content Writer</span><span class="exp-date">Feb 2023 – Jul 2023</span></div>
+            <div class="exp-company">MEXC Global</div>
+            <ul class="exp-bullets">
+              <li>Authored market analysis articles covering token launches, regulatory updates, and on-chain activity.</li>
+              <li>Recognised as top performer for consistent output quality and engagement metrics across a six-month tenure.</li>
+            </ul>
+          </div>
+          <div class="exp-item">
+            <div class="exp-header"><span class="exp-role">Senior Team Manager</span><span class="exp-date">Oct 2022 – May 2023</span></div>
+            <div class="exp-company">MEXC Global</div>
+            <ul class="exp-bullets">
+              <li>Led cross-platform social media team managing brand presence on Twitter, Telegram, Discord, and regional community channels.</li>
+              <li>Implemented content strategies that drove measurable follower growth during elevated crypto market volatility.</li>
+            </ul>
+          </div>
+        </div>
+        <div class="resume-block">
+          <div class="resume-block-label">Core Skills</div>
+          <div class="skills-grid">
+            <span class="skill-tag">Analytical Writing</span><span class="skill-tag">SEO Optimisation</span><span class="skill-tag">Editorial Research</span><span class="skill-tag">Crypto Market Analysis</span><span class="skill-tag">Regulatory Coverage</span><span class="skill-tag">DeFi &amp; Blockchain</span><span class="skill-tag">Community Management</span><span class="skill-tag">Team Leadership</span><span class="skill-tag">Remote Team Management</span>
+          </div>
+        </div>
+        <div class="resume-two-col">
+          <div class="resume-block">
+            <div class="resume-block-label">Education</div>
+            <div class="edu-degree">BS in Civil Engineering</div>
+            <div class="edu-school">Southern Mindanao Colleges</div>
+          </div>
+          <div class="resume-block">
+            <div class="resume-block-label">Languages</div>
+            <div class="lang-item"><b>English</b> — Professional</div>
+            <div class="lang-item"><b>Filipino</b> — Native</div>
+            <div class="lang-item"><b>Cebuano</b> — Native</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 <div class="wrap">
 
   <!-- Hero -->
@@ -471,15 +958,65 @@ body.offline #offline-banner{display:block}
       <h1 class="hero-name anim-fade-up" style="animation-delay:0.18s">
         <span id="typed-name"></span><span class="typed-cursor"></span>
       </h1>
-      <p class="hero-bio anim-fade-up" style="animation-delay:0.28s">Writing about Web3 without cheerleading for it — the hype, the blowups, and the occasional thing that actually works. DYOR is still the rule. I just try to make the research less painful.</p>
+      <p class="hero-bio anim-fade-up" style="animation-delay:0.26s">
+        <span id="typed-role" style="color:var(--accent);font-weight:500"></span><span class="typed-cursor" id="role-cursor" style="display:none"></span>
+      </p>
       <div class="hero-stats anim-fade-up" style="animation-delay:0.38s">
         <div class="stat"><b id="total-count">0</b> published articles</div>
         <div class="stat"><b>2025–2026</b></div>
         <div class="stat"><b><a href="https://www.lbank.com/creator/profile/675b7fb016824d0b8f45310ae3a4dc35" target="_blank" rel="noopener">LBank Creator ↗</a></b></div>
+        <div class="stat"><b><a href="mailto:razeljadehijastro28@gmail.com">Email ↗</a></b></div>
         <button id="install-btn">📥 Add to Home Screen</button>
+      </div>
+
+      <!-- Quick-action buttons -->
+      <div class="hero-actions anim-fade-up" style="animation-delay:0.46s">
+        <button class="action-btn" onclick="openModal('exp-modal')">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/></svg>
+          View Experience
+        </button>
+        <button class="action-btn" onclick="openModal('resume-modal')">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          View Resume
+        </button>
+        <button class="action-btn" onclick="openModal('rec-modal')">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+          Recommendation Letters
+        </button>
       </div>
     </div>
   </header>
+
+  <!-- ── About Me ─────────────────────────────────────────────── -->
+  <section class="about-section anim-fade-up" style="animation-delay:0.5s">
+    <p class="about-intro">I'm a crypto and Web3 content writer based in the Philippines. I didn't get into this space because I was early to Bitcoin — I got in because I wanted to understand what was actually happening beneath the hype cycles, the collapses, and the occasional thing that genuinely worked. Three years and 72+ articles for exchanges like <strong>LBank</strong> and <strong>MEXC</strong> later, I'm still skeptical enough to DYOR.</p>
+    <div class="about-grid">
+      <div class="about-card">
+        <div class="about-card-icon">🔍</div>
+        <div class="about-card-title">How I Research</div>
+        <div class="about-card-text">Primary sources first — government filings, SEC actions, on-chain data. I don't rewrite press releases. If I can't verify it, it doesn't go in.</div>
+      </div>
+      <div class="about-card">
+        <div class="about-card-icon">✍️</div>
+        <div class="about-card-title">How I Write</div>
+        <div class="about-card-text">I explain complex topics like regulatory frameworks or DeFi mechanics for readers who are smart but not necessarily insiders. No cheerleading, no FUD.</div>
+      </div>
+      <div class="about-card">
+        <div class="about-card-icon">📍</div>
+        <div class="about-card-title">Background</div>
+        <div class="about-card-text">Civil Engineering grad turned Web3 writer. The analytical mindset stuck — I approach every article like a structural audit: what holds, what doesn't.</div>
+      </div>
+      <div class="about-card">
+        <div class="about-card-icon">🌏</div>
+        <div class="about-card-title">Based In</div>
+        <div class="about-card-text">Pagadian City, Philippines. Available for remote writing engagements, research contracts, and editorial collaborations globally.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── What I Cover (Topics) ─────────────────────────────────── -->
+  <section class="topics-section anim-fade-up" style="animation-delay:0.1s;display:none" id="topics-placeholder-removed">
+  </section>
 
   <main>
     <!-- Toolbar -->
@@ -497,127 +1034,26 @@ body.offline #offline-banner{display:block}
     </div>
 
     <div class="articles" id="articles-list"></div>
+
+    <!-- See More button -->
+    <div id="see-more-wrap" style="text-align:center;margin-top:1.5rem;display:none">
+      <button class="see-more-btn" id="see-more-btn" onclick="showAllArticles()">
+        See all articles
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-left:5px;vertical-align:middle"><polyline points="6 9 12 15 18 9"/></svg>
+      </button>
+    </div>
   </main>
 
-  <!-- ── Resume Section ──────────────────────────────────────── -->
-  <section class="resume-section anim-fade-up" style="animation-delay:0.1s">
+  <!-- ── What I Cover (Topics) — below portfolio ───────────────── -->
+  <section class="topics-section anim-fade-up" style="animation-delay:0.1s">
     <div class="section-header">
-      <span class="section-label">Resume</span>
+      <div class="section-label-wrap">
+        <span class="section-label">What I Cover</span>
+        <span class="section-label-line"></span>
+      </div>
     </div>
-
-    <!-- Download bar -->
-    <div class="resume-download-bar">
-      <div class="resume-dl-icon">
-        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
-          <polyline points="14 2 14 8 20 8"/>
-          <line x1="12" y1="18" x2="12" y2="12"/>
-          <polyline points="9 15 12 18 15 15"/>
-        </svg>
-      </div>
-      <div class="resume-dl-text">
-        <div class="resume-dl-name">Razel Jade Hijastro — Resume</div>
-        <div class="resume-dl-sub">PDF · Updated May 2026</div>
-      </div>
-      <a class="resume-dl-btn" href="Razel-Jade-Hijastro-Resume.pdf" download>Download PDF</a>
-    </div>
-
-    <!-- Resume card -->
-    <div class="resume-card">
-
-      <!-- Summary -->
-      <div class="resume-block">
-        <div class="resume-block-label">Professional Summary</div>
-        <p class="resume-summary">Crypto and Web3 content specialist with 3+ years of experience producing institutional-grade analysis across leading exchanges. Track record covering Bitcoin adoption, DeFi mechanics, regulatory developments, and market structure for global audiences. Combines editorial rigour with community strategy — having led cross-platform teams at Bitget and MEXC during high-volatility market cycles.</p>
-      </div>
-
-      <!-- Experience -->
-      <div class="resume-block">
-        <div class="resume-block-label">Professional Experience</div>
-
-        <div class="exp-item">
-          <div class="exp-header">
-            <span class="exp-role">External Content Writer</span>
-            <span class="exp-date">Jul 2025 – Present</span>
-          </div>
-          <div class="exp-company">LBank Exchange</div>
-          <ul class="exp-bullets">
-            <li>Produces analytical articles on institutional Bitcoin adoption, ETF flows, regulatory developments, and DeFi protocol mechanics for LBank's global publication platform.</li>
-            <li>Maintains SEO-optimised editorial standards with strict sourcing requirements — government data, financial institution reports, and primary research.</li>
-            <li>Covers emerging policy themes including stablecoin legislation, CBDC surveillance implications, and tokenised securities frameworks.</li>
-          </ul>
-        </div>
-
-        <div class="exp-item">
-          <div class="exp-header">
-            <span class="exp-role">Assistant Manager, TikTok Team</span>
-            <span class="exp-date">Jul 2023 – Nov 2024</span>
-          </div>
-          <div class="exp-company">Bitget</div>
-          <ul class="exp-bullets">
-            <li>Supervised creator partnerships to expand Bitget's brand reach on TikTok across Southeast Asia.</li>
-            <li>Developed campaigns balancing educational crypto content with platform algorithm optimisation, improving organic reach and follower retention.</li>
-            <li>Managed creator onboarding pipelines, performance evaluation frameworks, and content guideline enforcement.</li>
-          </ul>
-        </div>
-
-        <div class="exp-item">
-          <div class="exp-header">
-            <span class="exp-role">Content Writer</span>
-            <span class="exp-date">Feb 2023 – Jul 2023</span>
-          </div>
-          <div class="exp-company">MEXC Global</div>
-          <ul class="exp-bullets">
-            <li>Authored market analysis articles covering token launches, regulatory updates, and on-chain activity.</li>
-            <li>Recognised as top performer for consistent output quality and engagement metrics across a six-month tenure.</li>
-          </ul>
-        </div>
-
-        <div class="exp-item">
-          <div class="exp-header">
-            <span class="exp-role">Senior Team Manager</span>
-            <span class="exp-date">Oct 2022 – May 2023</span>
-          </div>
-          <div class="exp-company">MEXC Global</div>
-          <ul class="exp-bullets">
-            <li>Led cross-platform social media team managing brand presence on Twitter, Telegram, Discord, and regional community channels.</li>
-            <li>Implemented content strategies that drove measurable follower growth during elevated crypto market volatility.</li>
-          </ul>
-        </div>
-      </div>
-
-      <!-- Skills -->
-      <div class="resume-block">
-        <div class="resume-block-label">Core Skills</div>
-        <div class="skills-grid">
-          <span class="skill-tag">Analytical Writing</span>
-          <span class="skill-tag">SEO Optimisation</span>
-          <span class="skill-tag">Editorial Research</span>
-          <span class="skill-tag">Crypto Market Analysis</span>
-          <span class="skill-tag">Regulatory Coverage</span>
-          <span class="skill-tag">DeFi &amp; Blockchain</span>
-          <span class="skill-tag">Community Management</span>
-          <span class="skill-tag">Team Leadership</span>
-          <span class="skill-tag">Remote Team Management</span>
-        </div>
-      </div>
-
-      <!-- Education + Languages -->
-      <div class="resume-two-col">
-        <div class="resume-block">
-          <div class="resume-block-label">Education</div>
-          <div class="edu-degree">BS in Civil Engineering</div>
-          <div class="edu-school">Southern Mindanao Colleges</div>
-        </div>
-        <div class="resume-block">
-          <div class="resume-block-label">Languages</div>
-          <div class="lang-item"><b>English</b> — Professional</div>
-          <div class="lang-item"><b>Filipino</b> — Native</div>
-          <div class="lang-item"><b>Cebuano</b> — Native</div>
-        </div>
-      </div>
-
-    </div>
+    <p class="section-desc">The crypto beats I know deepest — and keep returning to.</p>
+    <div class="topics-list" id="topics-list"></div>
   </section>
 
   <footer class="footer anim-fade-up" style="animation-delay:0.2s">
@@ -744,6 +1180,77 @@ function typeWriter(el,text,speed,onDone){
   tick();
 }
 
+/* ─── Cycling typewriter for subtitle ──────────────────── */
+function cycleTypeWriter(el,phrases,typeSpeed,pauseMs,deleteSpeed){
+  let phraseIndex=0;
+  function typePhrase(){
+    const phrase=phrases[phraseIndex];
+    let i=0;el.textContent='';
+    function typing(){
+      if(i<phrase.length){el.textContent+=phrase[i++];setTimeout(typing,typeSpeed);}
+      else setTimeout(deleting,pauseMs);
+    }
+    function deleting(){
+      if(el.textContent.length>0){el.textContent=el.textContent.slice(0,-1);setTimeout(deleting,deleteSpeed);}
+      else{phraseIndex=(phraseIndex+1)%phrases.length;setTimeout(typePhrase,350);}
+    }
+    typing();
+  }
+  typePhrase();
+}
+
+/* ─── Topics pills ──────────────────────────────────────── */
+const topicsData=[
+  {label:"Bitcoin & BTC Markets",color:"#E5860A",bg:"rgba(229,134,10,0.1)"},
+  {label:"DeFi Protocols",color:"#7F77DD",bg:"rgba(127,119,221,0.1)"},
+  {label:"Stablecoins",color:"#0F6E56",bg:"rgba(15,110,86,0.1)"},
+  {label:"Crypto Regulation",color:"#D4537E",bg:"rgba(212,83,126,0.1)"},
+  {label:"Ethereum & L2s",color:"#5865F2",bg:"rgba(88,101,242,0.1)"},
+  {label:"Security & Hacks",color:"#E24B4A",bg:"rgba(226,75,74,0.1)"},
+  {label:"Institutional Adoption",color:"#1D9E75",bg:"rgba(29,158,117,0.1)"},
+  {label:"Tokenization",color:"#185FA5",bg:"rgba(24,95,165,0.1)"},
+  {label:"Web3 Industry",color:"#BA7517",bg:"rgba(186,117,23,0.1)"},
+  {label:"CBDCs",color:"#6b6b66",bg:"rgba(107,107,102,0.1)"},
+  {label:"SEO Content Strategy",color:"#1D9E75",bg:"rgba(29,158,117,0.08)"},
+  {label:"Market Analysis",color:"#E5860A",bg:"rgba(229,134,10,0.08)"},
+];
+(function buildTopics(){
+  const container=document.getElementById('topics-list');
+  if(!container)return;
+  const obs=new IntersectionObserver((entries)=>{
+    entries.forEach(entry=>{
+      if(entry.isIntersecting){
+        const pills=container.querySelectorAll('.topic-pill');
+        pills.forEach((p,i)=>setTimeout(()=>p.classList.add('visible'),i*55));
+        obs.unobserve(container);
+      }
+    });
+  },{threshold:0.05});
+  topicsData.forEach(t=>{
+    const el=document.createElement('div');
+    el.className='topic-pill';
+    el.style.cssText=`background:${t.bg};border-color:${t.color}40;color:${t.color}`;
+    el.innerHTML=`<span class="topic-pill-dot" style="background:${t.color}"></span>${t.label}`;
+    container.appendChild(el);
+  });
+  obs.observe(container);
+})();
+
+/* ─── Timeline scroll reveal ────────────────────────────── */
+(function initTimeline(){
+  const items=document.querySelectorAll('.tl-item');
+  if(!items.length)return;
+  const obs=new IntersectionObserver((entries)=>{
+    entries.forEach(entry=>{
+      if(entry.isIntersecting){
+        entry.target.classList.add('visible');
+        obs.unobserve(entry.target);
+      }
+    });
+  },{threshold:0.1,rootMargin:'0px 0px -30px 0px'});
+  items.forEach((item,i)=>{item.style.transitionDelay=`${i*0.09}s`;obs.observe(item);});
+})();
+
 /* ─── Count-up animation ────────────────────────────────── */
 function countUp(el,target,duration){
   const start=performance.now();
@@ -778,6 +1285,7 @@ function buildFilters(){
 
 function setFilter(tag,clickedBtn){
   activeTag=tag;
+  showingAll=false;
   document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
   if(clickedBtn) clickedBtn.classList.add('active');
   render();
@@ -799,14 +1307,50 @@ function setupObserver(){
   },{threshold:0.05,rootMargin:'0px 0px -40px 0px'});
 }
 
+/* ─── Modal helpers ─────────────────────────────────────── */
+function openModal(id){
+  document.getElementById(id).classList.add('open');
+  document.body.style.overflow='hidden';
+}
+function closeModal(id){
+  document.getElementById(id).classList.remove('open');
+  document.body.style.overflow='';
+}
+function switchRecTab(index, btn){
+  document.querySelectorAll('.rec-tab').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.rec-letter').forEach(l=>l.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('rec-'+index).classList.add('active');
+}
+document.querySelectorAll('.modal-overlay').forEach(m=>{
+  m.addEventListener('click',e=>{if(e.target===m)closeModal(m.id);});
+});
+document.addEventListener('keydown',e=>{
+  if(e.key==='Escape') document.querySelectorAll('.modal-overlay.open').forEach(m=>closeModal(m.id));
+});
+
+/* ─── Show all articles ─────────────────────────────────── */
+let showingAll=false;
+function showAllArticles(){
+  showingAll=true;
+  document.getElementById('see-more-wrap').style.display='none';
+  render();
+}
+
 /* ─── Render articles ───────────────────────────────────── */
 function render(){
   const q=query.toLowerCase().trim();
+  const isAll=activeTag==='All'&&!q;
   const filtered=articles.filter(a=>{
     const tagOk=activeTag==='All'||a.tag===activeTag;
     const searchOk=!q||a.title.toLowerCase().includes(q)||a.tag.toLowerCase().includes(q)||a.date.includes(q);
     return tagOk&&searchOk;
   });
+
+  // Reset showingAll when filter or search changes
+  if(!isAll) showingAll=true;
+
+  const displayed = (isAll && !showingAll) ? filtered.slice(0,3) : filtered;
 
   const countLabel=document.getElementById('count-label');
   countLabel.style.opacity='0';
@@ -820,17 +1364,17 @@ function render(){
 
   if(!filtered.length){
     list.innerHTML='<div class="empty">No articles match — try a different search or filter.</div>';
+    document.getElementById('see-more-wrap').style.display='none';
     return;
   }
 
-  filtered.forEach((a,i)=>{
+  displayed.forEach((a,i)=>{
     const el=document.createElement('a');
     el.className='article';
-    // If a local .mhtml file exists, open that; otherwise fall back to LBank URL
     el.href=a.url;
     el.target='_blank';
     el.rel='noopener noreferrer';
-    el.dataset.delay=Math.min(i*30,300); // stagger up to 300ms
+    el.dataset.delay=Math.min(i*30,300);
     const color=tagColors[a.tag]||'#888780';
     const localBadge=a.local
       ?`<span class="local-badge"><svg width="9" height="9" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 1L1 4v6h3.5V7h3v3H11V4L6 1z" fill="currentColor"/></svg>Local</span>`
@@ -839,11 +1383,23 @@ function render(){
     list.appendChild(el);
     if(observer) observer.observe(el);
   });
+
+  // Show/hide See More
+  const seeMoreWrap=document.getElementById('see-more-wrap');
+  const seeMoreBtn=document.getElementById('see-more-btn');
+  if(isAll && !showingAll && filtered.length>3){
+    seeMoreWrap.style.display='block';
+    seeMoreBtn.textContent='';
+    seeMoreBtn.innerHTML=`See all ${filtered.length} articles <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-left:5px;vertical-align:middle"><polyline points="6 9 12 15 18 9"/></svg>`;
+  } else {
+    seeMoreWrap.style.display='none';
+  }
 }
 
 /* ─── Search ────────────────────────────────────────────── */
 document.getElementById('search').addEventListener('input',e=>{
   query=e.target.value;
+  showingAll=false;
   render();
 });
 
@@ -857,7 +1413,22 @@ setTimeout(()=>{
   typeWriter(
     document.getElementById('typed-name'),
     'Razel Jade Hijastro',
-    55
+    55,
+    ()=>{
+      // After name types, start cycling role subtitle
+      setTimeout(()=>{
+        const roleEl=document.getElementById('typed-role');
+        const cursor=document.getElementById('role-cursor');
+        if(cursor) cursor.style.display='inline-block';
+        cycleTypeWriter(roleEl,[
+          'Crypto Content Writer',
+          'Web3 Analyst',
+          'DeFi Researcher',
+          'Regulatory Beat Writer',
+          'Community Strategist',
+        ],65,2200,38);
+      },400);
+    }
   );
 },300);
 
