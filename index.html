@@ -26,6 +26,17 @@
     --accent-light:#04342C;
   }
 }
+/* Manual theme overrides */
+[data-theme="light"]{
+  --bg:#f9f8f5!important;--surface:#ffffff!important;--text:#1a1a18!important;--muted:#6b6b66!important;--hint:#9d9d98!important;
+  --border:rgba(0,0,0,0.09)!important;--border-hover:rgba(0,0,0,0.18)!important;
+  --accent-light:#E1F5EE!important;
+}
+[data-theme="dark"]{
+  --bg:#141413!important;--surface:#1e1e1c!important;--text:#e8e6df!important;--muted:#9d9d98!important;--hint:#6b6b66!important;
+  --border:rgba(255,255,255,0.09)!important;--border-hover:rgba(255,255,255,0.18)!important;
+  --accent-light:#04342C!important;
+}
 html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
 body{
   font-family:'DM Sans',sans-serif;
@@ -716,6 +727,188 @@ body.offline #offline-banner{display:block}
   .footer-grid{grid-template-columns:1fr}
 }
 
+/* ─── Theme toggle ────────────────────────────────────── */
+#theme-toggle{
+  position:fixed;top:14px;right:14px;z-index:200;
+  width:36px;height:36px;border-radius:50%;
+  border:1px solid var(--border);
+  background:var(--surface);
+  color:var(--muted);
+  cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  transition:all 0.22s var(--ease-out-expo);
+  box-shadow:0 2px 8px rgba(0,0,0,0.08);
+}
+#theme-toggle:hover{
+  border-color:var(--accent);color:var(--accent);
+  background:var(--accent-light);
+  transform:scale(1.08);
+}
+#theme-toggle .icon-sun{display:none}
+#theme-toggle .icon-moon{display:block}
+[data-theme="dark"] #theme-toggle .icon-sun{display:block}
+[data-theme="dark"] #theme-toggle .icon-moon{display:none}
+[data-theme="light"] #theme-toggle .icon-sun{display:block}
+[data-theme="light"] #theme-toggle .icon-moon{display:none}
+
+/* ─── Testimonial pull-quote ──────────────────────────── */
+.testimonial-section{
+  margin-top:1.75rem;
+  position:relative;
+}
+.testimonial-block{
+  position:relative;
+  padding:1.25rem 1.5rem 1.25rem 1.75rem;
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-left:3px solid var(--accent);
+  border-radius:0 12px 12px 0;
+  transition:border-color 0.2s ease, box-shadow 0.2s ease;
+}
+.testimonial-block:hover{
+  border-color:rgba(29,158,117,0.4);
+  border-left-color:var(--accent);
+  box-shadow:0 4px 20px rgba(29,158,117,0.08);
+}
+.testimonial-quote{
+  font-size:14.5px;color:var(--text);
+  line-height:1.75;font-style:italic;
+  margin-bottom:0.85rem;
+}
+.testimonial-quote::before{
+  content:'\201C';
+  font-family:'DM Serif Display',serif;
+  font-size:28px;line-height:0;vertical-align:-10px;
+  color:var(--accent);margin-right:4px;opacity:0.7;
+}
+.testimonial-quote::after{
+  content:'\201D';
+  font-family:'DM Serif Display',serif;
+  font-size:28px;line-height:0;vertical-align:-10px;
+  color:var(--accent);margin-left:2px;opacity:0.7;
+}
+.testimonial-footer{
+  display:flex;align-items:center;justify-content:space-between;
+  flex-wrap:wrap;gap:8px;
+}
+.testimonial-attr{
+  display:flex;align-items:center;gap:10px;
+}
+.testimonial-avatar{
+  width:32px;height:32px;border-radius:50%;
+  background:linear-gradient(135deg,#185FA5,#5865F2);
+  color:#fff;font-size:11px;font-weight:600;
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;
+}
+.testimonial-name{font-size:13px;font-weight:500;color:var(--text)}
+.testimonial-role{font-size:11.5px;color:var(--hint)}
+.testimonial-see-all{
+  font-family:'DM Sans',sans-serif;font-size:12px;font-weight:500;
+  color:var(--accent);background:var(--accent-light);
+  border:1px solid rgba(29,158,117,0.2);
+  padding:5px 14px;border-radius:20px;
+  cursor:pointer;
+  transition:all 0.18s ease;
+  white-space:nowrap;
+}
+.testimonial-see-all:hover{
+  background:var(--accent);color:#fff;
+  transform:translateY(-1px);
+}
+
+/* ─── Work With Me section ────────────────────────────── */
+.work-section{
+  margin-top:3rem;padding-top:2.5rem;
+  border-top:1px solid var(--border);
+}
+.work-section .section-header{margin-bottom:0.5rem}
+.work-desc{font-size:13.5px;color:var(--muted);line-height:1.75;margin-bottom:1.5rem;max-width:560px}
+.work-form{display:flex;flex-direction:column;gap:10px;max-width:520px}
+.work-input,.work-textarea{
+  font-family:'DM Sans',sans-serif;font-size:14px;
+  padding:10px 14px;
+  border:1px solid var(--border);border-radius:8px;
+  background:var(--surface);color:var(--text);
+  outline:none;resize:none;
+  transition:border-color 0.2s ease, box-shadow 0.2s ease;
+}
+.work-input::placeholder,.work-textarea::placeholder{color:var(--hint)}
+.work-input:focus,.work-textarea:focus{
+  border-color:var(--accent);
+  box-shadow:0 0 0 3px rgba(29,158,117,0.12);
+}
+.work-textarea{min-height:100px}
+.work-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.work-submit{
+  font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;
+  padding:10px 24px;width:fit-content;
+  background:var(--accent);color:#fff;
+  border:none;border-radius:20px;cursor:pointer;
+  transition:background 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+  display:flex;align-items:center;gap:8px;
+}
+.work-submit:hover{
+  background:var(--accent-dark);
+  transform:translateY(-2px);
+  box-shadow:0 6px 18px rgba(29,158,117,0.3);
+}
+.work-submit:disabled{
+  opacity:0.6;cursor:not-allowed;transform:none;box-shadow:none;
+}
+.work-alt{
+  font-size:12.5px;color:var(--hint);margin-top:0.5rem;
+}
+.work-alt a{color:var(--accent);text-decoration:none}
+.work-alt a:hover{text-decoration:underline}
+.work-success{
+  display:none;
+  align-items:center;gap:10px;
+  font-size:14px;color:var(--accent);
+  padding:12px 16px;
+  background:var(--accent-light);
+  border:1px solid rgba(29,158,117,0.2);
+  border-radius:8px;
+  margin-top:4px;
+}
+.work-success.show{display:flex}
+
+/* ─── Back to top ─────────────────────────────────────── */
+#back-to-top{
+  position:fixed;bottom:24px;right:16px;z-index:200;
+  width:40px;height:40px;border-radius:50%;
+  border:1px solid var(--border);
+  background:var(--surface);
+  color:var(--muted);
+  cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 4px 16px rgba(0,0,0,0.1);
+  opacity:0;pointer-events:none;
+  transform:translateY(12px);
+  transition:opacity 0.25s ease, transform 0.25s var(--ease-out-expo), border-color 0.18s ease, color 0.18s ease, background 0.18s ease;
+}
+#back-to-top.visible{opacity:1;pointer-events:all;transform:translateY(0)}
+#back-to-top:hover{
+  border-color:var(--accent);color:var(--accent);background:var(--accent-light);
+}
+
+/* ─── Share button ────────────────────────────────────── */
+.share-btn{
+  font-family:'DM Sans',sans-serif;font-size:12px;font-weight:500;
+  padding:5px 14px;
+  border:1px solid var(--border);border-radius:20px;
+  background:transparent;color:var(--muted);
+  cursor:pointer;
+  display:inline-flex;align-items:center;gap:6px;
+  transition:all 0.18s ease;
+}
+.share-btn:hover{
+  border-color:var(--accent);color:var(--accent);background:var(--accent-light);
+}
+.share-btn.copied{
+  border-color:var(--accent);color:var(--accent);background:var(--accent-light);
+}
+
 /* ─── Reduced motion ──────────────────────────────────── */
 @media(prefers-reduced-motion:reduce){
   .anim-fade-up,.anim-scale-in,.anim-fade-in,.article{
@@ -728,9 +921,24 @@ body.offline #offline-banner{display:block}
   .filter-btn:hover{transform:none}
   #install-btn:hover{transform:none}
 }
+@media(max-width:560px){
+  .work-row{grid-template-columns:1fr}
+  #theme-toggle{top:10px;right:10px}
+}
 </style>
 </head>
 <body>
+
+<!-- Theme toggle -->
+<button id="theme-toggle" aria-label="Toggle dark/light mode">
+  <svg class="icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+  <svg class="icon-sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+</button>
+
+<!-- Back to top -->
+<button id="back-to-top" aria-label="Back to top">
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="18 15 12 9 6 15"/></svg>
+</button>
 
 <!-- Scroll progress bar -->
 <div id="progress-bar"></div>
@@ -1035,6 +1243,23 @@ body.offline #offline-banner{display:block}
     </div>
   </section>
 
+  <!-- ── Testimonial pull-quote ────────────────────────────────── -->
+  <section class="testimonial-section anim-fade-up" style="animation-delay:0.55s">
+    <div class="testimonial-block">
+      <p class="testimonial-quote">He writes clearly, gets the details right, and respects the reader's time. What stood out most was how seriously he takes his own growth — he's not just checking boxes.</p>
+      <div class="testimonial-footer">
+        <div class="testimonial-attr">
+          <div class="testimonial-avatar">AP</div>
+          <div>
+            <div class="testimonial-name">Amber Peng</div>
+            <div class="testimonial-role">Senior Content Manager · LBank</div>
+          </div>
+        </div>
+        <button class="testimonial-see-all" onclick="openModal('rec-modal')">See all letters →</button>
+      </div>
+    </div>
+  </section>
+
   <!-- ── What I Cover (Topics) ─────────────────────────────────── -->
   <section class="topics-section anim-fade-up" style="animation-delay:0.1s;display:none" id="topics-placeholder-removed">
   </section>
@@ -1077,6 +1302,34 @@ body.offline #offline-banner{display:block}
     <div class="topics-list" id="topics-list"></div>
   </section>
 
+  <!-- ── Work With Me ─────────────────────────────────────────── -->
+  <section class="work-section anim-fade-up" style="animation-delay:0.15s">
+    <div class="section-header">
+      <div class="section-label-wrap">
+        <span class="section-label">Work With Me</span>
+        <span class="section-label-line"></span>
+      </div>
+    </div>
+    <p class="work-desc">I write about crypto — institutional adoption, DeFi mechanics, regulatory stuff. I don't dumb it down. If that's what you're looking for, message me. Freelance articles, research contracts, editorial collabs — all fine.</p>
+    <div class="work-form" id="work-form">
+      <div class="work-row">
+        <input class="work-input" type="text" id="wf-name" placeholder="Your name" autocomplete="name">
+        <input class="work-input" type="email" id="wf-email" placeholder="Email address" autocomplete="email">
+      </div>
+      <input class="work-input" type="text" id="wf-subject" placeholder="Subject / project type">
+      <textarea class="work-textarea" id="wf-message" placeholder="Tell me about the project…"></textarea>
+      <button class="work-submit" id="wf-submit" onclick="submitWorkForm()">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+        Send Message
+      </button>
+      <div class="work-success" id="wf-success">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+        Message sent — I'll get back to you shortly!
+      </div>
+    </div>
+    <p class="work-alt" style="margin-top:1rem">Prefer direct contact? Reach me at <a href="mailto:razeljadehijastro28@gmail.com">razeljadehijastro28@gmail.com</a> or on <a href="https://t.me" target="_blank" rel="noopener">Telegram</a>.</p>
+  </section>
+
   <footer class="footer anim-fade-up" style="animation-delay:0.2s">
     <p>Originally published on <a href="https://www.lbank.com/creator/profile/675b7fb016824d0b8f45310ae3a4dc35" target="_blank" rel="noopener">LBank Creator</a>. This is a personal portfolio backup — all articles link to their original published versions.</p>
     <div class="footer-grid">
@@ -1088,6 +1341,12 @@ body.offline #offline-banner{display:block}
         <b>Offline access</b>
         This portfolio works offline once visited. All 72 article links and metadata are stored locally in your browser.
       </div>
+    </div>
+    <div style="margin-top:1rem">
+      <button class="share-btn" id="share-btn" onclick="sharePortfolio()">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+        Share this portfolio
+      </button>
     </div>
   </footer>
 </div>
@@ -1481,6 +1740,121 @@ checkOnline();
 /* ─── Service Worker ────────────────────────────────────── */
 if('serviceWorker' in navigator){
   navigator.serviceWorker.register('sw.js').catch(()=>{});
+}
+
+/* ─── Theme toggle ──────────────────────────────────────── */
+(function initTheme(){
+  const saved=localStorage.getItem('theme');
+  const prefersDark=window.matchMedia('(prefers-color-scheme:dark)').matches;
+  const theme=saved||(prefersDark?'dark':'light');
+  document.documentElement.setAttribute('data-theme',theme);
+  // Apply theme via attribute
+  applyTheme(theme);
+})();
+
+function applyTheme(theme){
+  const root=document.documentElement;
+  if(theme==='light'){
+    root.style.setProperty('--bg','#f9f8f5');
+    root.style.setProperty('--surface','#ffffff');
+    root.style.setProperty('--text','#1a1a18');
+    root.style.setProperty('--muted','#6b6b66');
+    root.style.setProperty('--hint','#9d9d98');
+    root.style.setProperty('--border','rgba(0,0,0,0.09)');
+    root.style.setProperty('--border-hover','rgba(0,0,0,0.18)');
+    root.style.setProperty('--accent-light','#E1F5EE');
+  } else {
+    root.style.setProperty('--bg','#141413');
+    root.style.setProperty('--surface','#1e1e1c');
+    root.style.setProperty('--text','#e8e6df');
+    root.style.setProperty('--muted','#9d9d98');
+    root.style.setProperty('--hint','#6b6b66');
+    root.style.setProperty('--border','rgba(255,255,255,0.09)');
+    root.style.setProperty('--border-hover','rgba(255,255,255,0.18)');
+    root.style.setProperty('--accent-light','#04342C');
+  }
+}
+
+document.getElementById('theme-toggle').addEventListener('click',()=>{
+  const current=document.documentElement.getAttribute('data-theme')||'light';
+  const next=current==='dark'?'light':'dark';
+  document.documentElement.setAttribute('data-theme',next);
+  localStorage.setItem('theme',next);
+  applyTheme(next);
+});
+
+/* ─── Back to top ───────────────────────────────────────── */
+(function initBackToTop(){
+  const btn=document.getElementById('back-to-top');
+  window.addEventListener('scroll',()=>{
+    btn.classList.toggle('visible',window.scrollY>500);
+  },{passive:true});
+  btn.addEventListener('click',()=>{
+    window.scrollTo({top:0,behavior:'smooth'});
+  });
+})();
+
+/* ─── Share portfolio ───────────────────────────────────── */
+async function sharePortfolio(){
+  const btn=document.getElementById('share-btn');
+  const url=window.location.href;
+  if(navigator.share){
+    try{
+      await navigator.share({
+        title:'Razel Jade Hijastro — Crypto Writer Portfolio',
+        text:'72+ published articles on crypto, blockchain, and Web3.',
+        url
+      });
+    }catch(e){/* user cancelled */}
+    return;
+  }
+  try{
+    await navigator.clipboard.writeText(url);
+    btn.classList.add('copied');
+    const orig=btn.innerHTML;
+    btn.innerHTML=`<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Copied!`;
+    setTimeout(()=>{btn.innerHTML=orig;btn.classList.remove('copied');},2200);
+  }catch(e){
+    window.prompt('Copy this link:',url);
+  }
+}
+
+/* ─── Contact form (Formspree) ──────────────────────────── */
+async function submitWorkForm(){
+  const name=document.getElementById('wf-name').value.trim();
+  const email=document.getElementById('wf-email').value.trim();
+  const subject=document.getElementById('wf-subject').value.trim();
+  const message=document.getElementById('wf-message').value.trim();
+  if(!name||!email||!message){
+    // simple highlight missing fields
+    [['wf-name',name],['wf-email',email],['wf-message',message]].forEach(([id,val])=>{
+      const el=document.getElementById(id);
+      if(!val){el.style.borderColor='#e05c5c';el.addEventListener('input',()=>el.style.borderColor='',{once:true});}
+    });
+    return;
+  }
+  const btn=document.getElementById('wf-submit');
+  btn.disabled=true;
+  btn.textContent='Sending…';
+  try{
+    const res=await fetch('https://formspree.io/f/xpwzqknd',{
+      method:'POST',
+      headers:{'Content-Type':'application/json','Accept':'application/json'},
+      body:JSON.stringify({name,email,subject,message})
+    });
+    if(res.ok){
+      document.getElementById('wf-success').classList.add('show');
+      ['wf-name','wf-email','wf-subject','wf-message'].forEach(id=>document.getElementById(id).value='');
+    } else {
+      // fallback: open mail client
+      window.location.href=`mailto:razeljadehijastro28@gmail.com?subject=${encodeURIComponent(subject||'Portfolio inquiry')}&body=${encodeURIComponent(message)}`;
+    }
+  }catch(e){
+    window.location.href=`mailto:razeljadehijastro28@gmail.com?subject=${encodeURIComponent(subject||'Portfolio inquiry')}&body=${encodeURIComponent(message)}`;
+  }finally{
+    btn.disabled=false;
+    btn.innerHTML=`<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg> Send Message`;
+  }
 }
 </script>
 </body>
