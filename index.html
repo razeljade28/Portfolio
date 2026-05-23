@@ -251,6 +251,29 @@ body.offline #offline-banner{display:block}
 /* ─── Articles ────────────────────────────────────────── */
 .articles{display:flex;flex-direction:column}
 
+/* Scrollable wrapper — activates when all articles shown */
+.articles-scroll-wrap{
+  transition:max-height 0.4s var(--ease-out-expo);
+}
+.articles-scroll-wrap.scrollable{
+  max-height:520px;
+  overflow-y:auto;
+  border:1px solid var(--border);
+  border-radius:12px;
+  padding:0 0.25rem;
+  /* Custom scrollbar */
+  scrollbar-width:thin;
+  scrollbar-color:var(--accent) transparent;
+}
+.articles-scroll-wrap.scrollable::-webkit-scrollbar{width:5px}
+.articles-scroll-wrap.scrollable::-webkit-scrollbar-track{background:transparent}
+.articles-scroll-wrap.scrollable::-webkit-scrollbar-thumb{
+  background:var(--accent);border-radius:10px;opacity:0.6;
+}
+.articles-scroll-wrap.scrollable .articles{padding:0 0.5rem}
+.articles-scroll-wrap.scrollable .article:first-child{padding-top:1rem}
+.articles-scroll-wrap.scrollable .article:last-child{border-bottom:none;padding-bottom:1rem}
+
 /* AOS-style scroll reveal for articles */
 .article{
   display:grid;grid-template-columns:1fr 80px;gap:1rem;align-items:start;
@@ -1280,7 +1303,9 @@ body.offline #offline-banner{display:block}
       <span class="count" id="count-label">72 articles</span>
     </div>
 
-    <div class="articles" id="articles-list"></div>
+    <div class="articles-scroll-wrap" id="articles-scroll-wrap">
+      <div class="articles" id="articles-list"></div>
+    </div>
 
     <!-- See More button -->
     <div id="see-more-wrap" style="text-align:center;margin-top:1.5rem;display:none">
@@ -1615,7 +1640,12 @@ let showingAll=false;
 function showAllArticles(){
   showingAll=true;
   document.getElementById('see-more-wrap').style.display='none';
+  document.getElementById('articles-scroll-wrap').classList.add('scrollable');
   render();
+  // Scroll the wrapper into pleasant view
+  setTimeout(()=>{
+    document.getElementById('articles-scroll-wrap').scrollTop=0;
+  },50);
 }
 
 /* ─── Render articles ───────────────────────────────────── */
@@ -1668,8 +1698,10 @@ function render(){
   // Show/hide See More
   const seeMoreWrap=document.getElementById('see-more-wrap');
   const seeMoreBtn=document.getElementById('see-more-btn');
+  const scrollWrap=document.getElementById('articles-scroll-wrap');
   if(isAll && !showingAll && filtered.length>3){
     seeMoreWrap.style.display='block';
+    scrollWrap.classList.remove('scrollable');
     seeMoreBtn.textContent='';
     seeMoreBtn.innerHTML=`See all ${filtered.length} articles <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-left:5px;vertical-align:middle"><polyline points="6 9 12 15 18 9"/></svg>`;
   } else {
