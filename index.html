@@ -1838,7 +1838,7 @@ async function submitWorkForm(){
   btn.disabled=true;
   btn.textContent='Sending…';
   try{
-    const res=await fetch('https://formspree.io/f/xpwzqknd',{
+    const res=await fetch('https://formspree.io/f/mnjrvyoa',{
       method:'POST',
       headers:{'Content-Type':'application/json','Accept':'application/json'},
       body:JSON.stringify({name,email,subject,message})
