@@ -1,0 +1,34 @@
+{
+  "title": "How to Choose a Primary Care Doctor: A Practical Guide",
+  "description": "Find out how to choose a primary care doctor. Compare qualifications, costs, availability, and communication with this practical checklist.",
+  "suggestedSlug": "how-to-choose-primary-care-doctor",
+  "language": "en",
+  "audience": [
+    "Patients",
+    "People seeking healthcare services"
+  ],
+  "primaryKeywordCandidate": "how to choose a primary care doctor",
+  "relatedKeywordCandidates": [
+    "questions to ask a new doctor",
+    "choosing a primary care physician",
+    "how to find a family doctor"
+  ],
+  "keywordResearchStatus": "Candidate phrases only; search volume and difficulty have not been verified.",
+  "targetCountry": null,
+  "canonicalUrl": null,
+  "author": null,
+  "medicalReviewer": null,
+  "internalLinkSuggestions": [
+    "Provider profiles",
+    "Primary care services",
+    "Consultation fees",
+    "Appointment booking"
+  ],
+  "structuredData": {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "How to choose a primary care doctor: A practical guide",
+    "description": "Find out how to choose a primary care doctor. Compare qualifications, costs, availability, and communication with this practical checklist.",
+    "inLanguage": "en"
+  }
+}
