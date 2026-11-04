@@ -1,5 +1,7 @@
 # How to choose a primary care doctor: A practical guide
 
+> Practice project / Healthcare writing sample
+
 To choose a primary care doctor, check their qualifications and whether they provide the care you need. Find out what appointments cost and whether you can attend them. When you meet, notice how comfortable you feel talking about your health.
 
 ## What care do you need?
@@ -60,3 +62,14 @@ Fill in a column for each doctor you're considering. Write "not yet confirmed" w
 | Follow-up arrangements explained | | |
 
 Ask each clinic the same questions so you can compare the answers. Once you've found a suitable provider, book an appointment. Keep your notes so you can reconsider your choice afterward.
+
+## How this sample was made
+
+Created to practise patient-focused SEO writing. Research drew on MedlinePlus, the GMC, NIA, and MyHealthfinder. The draft was organized around choosing a doctor, edited with Humanizer, and paired with a comparison checklist, SEO title, and description.
+
+### Tools used
+
+- Codex: AI-assisted drafting, web research, and HTML/CSS.
+- Humanizer skill: Prose editing.
+- Playwright: Desktop and mobile browser checks.
+- GitHub Pages: Hosting.

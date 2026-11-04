@@ -32,7 +32,7 @@ export function SampleProjects({ runtime: h, Link, standalone = false }) {
           h.jsxs('div', { children: [
             h.jsx('p', { className: 'sample-projects__eyebrow', children: 'Writing in practice' }),
             h.jsx(heading, { id: 'sample-projects-title', className: standalone ? 'view__title' : 'sample-projects__title', children: 'Sample projects' }),
-            standalone && h.jsx('p', { className: 'view__lede', children: 'Writing samples with the finished article, sources, and publishing details.' })
+            standalone && h.jsx('p', { className: 'view__lede', children: 'Practice projects created for this portfolio, with articles, process notes, and tools used.' })
           ] }),
           !standalone && h.jsxs(Link, { to: '/sample-projects', className: 'sample-projects__all', children: ['View all samples ', h.jsx('span', { 'aria-hidden': true, children: '\u2192' })] }),
           standalone && h.jsx(Link, { to: '/', className: 'sample-projects__back', children: '\u2190 Back to home' })
@@ -49,7 +49,7 @@ export function SampleProjects({ runtime: h, Link, standalone = false }) {
             h.jsxs('a', { className: 'sample-project__preview', href: articleUrl, 'aria-label': 'Read the healthcare article: ' + sample.title, children: [
               h.jsx('span', { className: 'sample-project__preview-label', children: sample.label }),
               h.jsxs('div', { className: 'sample-project__paper', 'aria-hidden': true, children: [
-                h.jsx('span', { className: 'sample-project__paper-kicker', children: 'Patient guide' }),
+                h.jsx('span', { className: 'sample-project__paper-kicker', children: 'Practice article' }),
                 h.jsx('span', { className: 'sample-project__paper-title', children: sample.title }),
                 h.jsx('span', { className: 'sample-project__paper-subtitle', children: sample.subtitle }),
                 h.jsx('span', { className: 'sample-project__paper-rule' }),
@@ -59,7 +59,7 @@ export function SampleProjects({ runtime: h, Link, standalone = false }) {
               h.jsxs('span', { className: 'sample-project__preview-link', children: ['Read the article ', arrow] })
             ] }),
             h.jsxs('div', { className: 'sample-project__copy', children: [
-              h.jsx('p', { className: 'sample-project__category', children: String(index + 1).padStart(2, '0') + ' / Healthcare writing sample' }),
+              h.jsx('p', { className: 'sample-project__category', children: String(index + 1).padStart(2, '0') + ' / Practice project' }),
               h.jsx(projectHeading, { className: 'sample-project__title', children: sample.title }),
               h.jsx('p', { className: 'sample-project__description', children: sample.description }),
               h.jsx('ul', { className: 'sample-project__tags', 'aria-label': 'Project topics', children: ['SEO article', 'Patient education', 'Source research'].map(tag => h.jsx('li', { children: tag }, tag)) }),
@@ -75,7 +75,7 @@ export function SampleProjects({ runtime: h, Link, standalone = false }) {
       standalone && h.jsxs('div', { className: 'sample-projects__notes', children: [
         h.jsx('h2', { children: 'Inside these samples' }),
         h.jsx('p', { children: 'These articles are written for patients and people looking for healthcare services. Each project includes the article in Markdown, its SEO title and description, source notes, and a responsive HTML version.' }),
-        h.jsx('p', { children: 'These are portfolio writing samples. Keyword phrases are candidates; search-volume and ranking results have not been measured.' })
+        h.jsx('p', { children: 'These are practice projects created for this portfolio. Each article explains how it was made and lists the tools used. Keyword phrases are candidates; search-volume and ranking results have not been measured.' })
       ] })
     ]
   });

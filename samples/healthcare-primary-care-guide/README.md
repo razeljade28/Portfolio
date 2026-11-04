@@ -1,5 +1,7 @@
 # Healthcare article package
 
+**Practice project / Healthcare writing sample.** Created for this portfolio.
+
 A finished article for patients choosing a primary care doctor, with an HTML preview, SEO fields, a printable comparison checklist, and source notes. The prose was edited using [Humanizer](https://github.com/blader/humanizer).
 
 ## Files
@@ -33,3 +35,14 @@ Keyword phrases are candidates. No search-volume or ranking-difficulty values ha
 The package lives at `samples/healthcare-primary-care-guide/` in the `razeljade28/Portfolio` repository. It is linked from the homepage and the [Sample projects page](https://razeljade28.github.io/Portfolio/#/sample-projects). [Read the article](https://razeljade28.github.io/Portfolio/samples/healthcare-primary-care-guide/index.html) on GitHub Pages.
 
 The article uses the portfolio's cream, navy, and orange palette and system font stack. Its theme button shares the main portfolio's saved light/dark preference.
+
+## How this sample was made
+
+Created to practise patient-focused SEO writing. Research drew on MedlinePlus, the GMC, NIA, and MyHealthfinder. The draft was organized around choosing a doctor, edited with Humanizer, and paired with a comparison checklist, SEO title, and description.
+
+### Tools used
+
+- Codex: AI-assisted drafting, web research, and HTML/CSS.
+- Humanizer skill: Prose editing.
+- Playwright: Desktop and mobile browser checks.
+- GitHub Pages: Hosting.

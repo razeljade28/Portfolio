@@ -1,5 +1,7 @@
 # How to prepare for a doctor's appointment
 
+> Practice project / Healthcare writing sample
+
 Before your next doctor's appointment, write down what you want help with and gather the information the clinic needs. Keep your notes somewhere you can reach during the visit, whether that's a notebook or your phone. Start with the concern you most want to discuss.
 
 ## Put your main concern first
@@ -58,3 +60,14 @@ Use the space below to record what you need for the appointment and what you agr
 | Agreed next step and instructions | |
 | Expected results date and contact person | |
 | Follow-up appointment or booking to arrange | |
+
+## How this sample was made
+
+Created to practise patient education writing. NHS, NIH, MedlinePlus, and AHRQ guidance informed the outline. The draft was edited with Humanizer and turned into an article with an appointment notes sheet, SEO title, and description.
+
+### Tools used
+
+- Codex: AI-assisted drafting, web research, and HTML/CSS.
+- Humanizer skill: Prose editing.
+- Playwright: Desktop and mobile browser checks.
+- GitHub Pages: Hosting.
