@@ -5,3 +5,5 @@
 
 .sample-project__preview-label,.sample-project__paper-kicker{color:var(--orange-ink)}
 @media(max-width:680px){.sample-project__preview,.sample-projects-page .sample-project__preview{display:flex;gap:14px;padding:20px}.sample-project__preview-label,.sample-project__preview-link{align-self:auto}.sample-project__paper,.sample-projects-page .sample-project__paper{width:100%;max-width:none;padding:18px}.sample-project__paper-title,.sample-projects-page .sample-project__paper-title{font-size:24px;max-width:19ch}}
+
+.sample-projects__list{display:grid;gap:22px;min-width:0}

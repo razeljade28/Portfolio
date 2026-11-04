@@ -1,7 +1,21 @@
 // This published portfolio has no framework source checkout. Keep this section
 // readable and independent of the generated bundle's internal variable names.
-const articleUrl = new URL('../samples/healthcare-primary-care-guide/index.html', import.meta.url).href;
-const filesUrl = 'https://github.com/razeljade28/Portfolio/tree/main/samples/healthcare-primary-care-guide';
+const samples = [
+  {
+    slug: 'healthcare-primary-care-guide',
+    label: 'Choosing care',
+    title: 'How to choose a primary care doctor',
+    subtitle: 'A practical guide',
+    description: 'A patient guide to comparing doctors, checking credentials, and asking the right questions before booking. Includes sources and a printable comparison checklist.'
+  },
+  {
+    slug: 'doctor-appointment-preparation',
+    label: 'Preparing for a visit',
+    title: "How to prepare for a doctor's appointment",
+    subtitle: 'Questions to ask and notes to bring',
+    description: 'A guide to organizing your concerns, bringing useful information, and understanding the next steps after a visit. Includes sources and a printable appointment notes sheet.'
+  }
+];
 
 export function SampleProjects({ runtime: h, Link, standalone = false }) {
   const heading = standalone ? 'h1' : 'h2';
@@ -25,16 +39,19 @@ export function SampleProjects({ runtime: h, Link, standalone = false }) {
         ]
       }),
       h.jsx('div', {
-        className: standalone ? 'sample-projects__body' : undefined,
-        children: h.jsxs('article', {
+        className: standalone ? 'sample-projects__body sample-projects__list' : 'sample-projects__list',
+        children: samples.map((sample, index) => {
+          const articleUrl = new URL('../samples/' + sample.slug + '/index.html', import.meta.url).href;
+          const filesUrl = 'https://github.com/razeljade28/Portfolio/tree/main/samples/' + sample.slug;
+          return h.jsxs('article', {
           className: 'sample-project',
           children: [
-            h.jsxs('a', { className: 'sample-project__preview', href: articleUrl, 'aria-label': 'Read the healthcare article: How to choose a primary care doctor', children: [
-              h.jsx('span', { className: 'sample-project__preview-label', children: 'Choosing care' }),
+            h.jsxs('a', { className: 'sample-project__preview', href: articleUrl, 'aria-label': 'Read the healthcare article: ' + sample.title, children: [
+              h.jsx('span', { className: 'sample-project__preview-label', children: sample.label }),
               h.jsxs('div', { className: 'sample-project__paper', 'aria-hidden': true, children: [
                 h.jsx('span', { className: 'sample-project__paper-kicker', children: 'Patient guide' }),
-                h.jsx('span', { className: 'sample-project__paper-title', children: 'How to choose a primary care doctor' }),
-                h.jsx('span', { className: 'sample-project__paper-subtitle', children: 'A practical guide' }),
+                h.jsx('span', { className: 'sample-project__paper-title', children: sample.title }),
+                h.jsx('span', { className: 'sample-project__paper-subtitle', children: sample.subtitle }),
                 h.jsx('span', { className: 'sample-project__paper-rule' }),
                 h.jsx('span', { className: 'sample-project__paper-line' }),
                 h.jsx('span', { className: 'sample-project__paper-line sample-project__paper-line--short' })
@@ -42,9 +59,9 @@ export function SampleProjects({ runtime: h, Link, standalone = false }) {
               h.jsxs('span', { className: 'sample-project__preview-link', children: ['Read the article ', arrow] })
             ] }),
             h.jsxs('div', { className: 'sample-project__copy', children: [
-              h.jsx('p', { className: 'sample-project__category', children: '01 / Healthcare writing sample' }),
-              h.jsx(projectHeading, { className: 'sample-project__title', children: 'How to choose a primary care doctor' }),
-              h.jsx('p', { className: 'sample-project__description', children: 'A patient guide to comparing doctors, checking credentials, and asking the right questions before booking. Includes sources and a printable comparison checklist.' }),
+              h.jsx('p', { className: 'sample-project__category', children: String(index + 1).padStart(2, '0') + ' / Healthcare writing sample' }),
+              h.jsx(projectHeading, { className: 'sample-project__title', children: sample.title }),
+              h.jsx('p', { className: 'sample-project__description', children: sample.description }),
               h.jsx('ul', { className: 'sample-project__tags', 'aria-label': 'Project topics', children: ['SEO article', 'Patient education', 'Source research'].map(tag => h.jsx('li', { children: tag }, tag)) }),
               h.jsxs('div', { className: 'sample-project__actions', children: [
                 h.jsxs('a', { href: articleUrl, className: 'sample-project__read', children: ['Read article ', arrow] }),
@@ -52,12 +69,13 @@ export function SampleProjects({ runtime: h, Link, standalone = false }) {
               ] })
             ] })
           ]
+        }, sample.slug);
         })
       }),
       standalone && h.jsxs('div', { className: 'sample-projects__notes', children: [
-        h.jsx('h2', { children: 'Inside this sample' }),
-        h.jsx('p', { children: 'The article is written for patients and people looking for healthcare services. The project files include the article in Markdown, its SEO title and description, source notes, and a responsive HTML version.' }),
-        h.jsx('p', { children: 'This is a portfolio writing sample. Keyword phrases are candidates; search-volume and ranking results have not been measured.' })
+        h.jsx('h2', { children: 'Inside these samples' }),
+        h.jsx('p', { children: 'These articles are written for patients and people looking for healthcare services. Each project includes the article in Markdown, its SEO title and description, source notes, and a responsive HTML version.' }),
+        h.jsx('p', { children: 'These are portfolio writing samples. Keyword phrases are candidates; search-volume and ranking results have not been measured.' })
       ] })
     ]
   });

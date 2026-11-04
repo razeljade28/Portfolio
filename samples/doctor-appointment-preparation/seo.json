@@ -1,0 +1,40 @@
+{
+  "title": "How to Prepare for a Doctor's Appointment: Checklist",
+  "description": "Prepare for a doctor's appointment with questions to ask, information to bring, and a printable notes sheet for symptoms, medicines, and follow-up plans.",
+  "suggestedSlug": "how-to-prepare-for-doctors-appointment",
+  "language": "en",
+  "audience": [
+    "Patients",
+    "People preparing for a healthcare appointment"
+  ],
+  "searchIntent": "Informational: practical appointment preparation",
+  "primaryKeywordCandidate": "how to prepare for a doctor's appointment",
+  "relatedKeywordCandidates": [
+    "what to bring to a doctor appointment",
+    "questions to ask your doctor",
+    "doctor appointment checklist"
+  ],
+  "keywordResearchStatus": "Candidate phrases only; search volume and difficulty have not been verified.",
+  "targetCountry": null,
+  "canonicalUrl": "https://razeljade28.github.io/Portfolio/samples/doctor-appointment-preparation/index.html",
+  "author": null,
+  "medicalReviewer": null,
+  "internalLinkSuggestions": [
+    {
+      "label": "How to choose a primary care doctor",
+      "url": "../healthcare-primary-care-guide/index.html"
+    },
+    {
+      "label": "Sample projects",
+      "url": "../../#/sample-projects"
+    }
+  ],
+  "structuredData": {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "How to prepare for a doctor's appointment",
+    "description": "Prepare for a doctor's appointment with questions to ask, information to bring, and a printable notes sheet for symptoms, medicines, and follow-up plans.",
+    "inLanguage": "en",
+    "url": "https://razeljade28.github.io/Portfolio/samples/doctor-appointment-preparation/index.html"
+  }
+}
