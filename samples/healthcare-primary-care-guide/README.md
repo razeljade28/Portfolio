@@ -30,4 +30,6 @@ Keyword phrases are candidates. No search-volume or ranking-difficulty values ha
 
 ## GitHub placement
 
-The package is prepared for `samples/healthcare-primary-care-guide/` in the `razeljade28/Portfolio` repository. This preserves the portfolio's existing files. Adding it to GitHub stores the package; it does not automatically add a link from the portfolio or enable a hosting service.
+The package lives at `samples/healthcare-primary-care-guide/` in the `razeljade28/Portfolio` repository. It is linked from the homepage and the [Sample projects page](https://razeljade28.github.io/Portfolio/#/sample-projects). [Read the article](https://razeljade28.github.io/Portfolio/samples/healthcare-primary-care-guide/index.html) on GitHub Pages.
+
+The article uses the portfolio's cream, navy, and orange palette and system font stack. Its theme button shares the main portfolio's saved light/dark preference.
